@@ -7,7 +7,7 @@ namespace RimRPC
 {
     public class Mod : Verse.Mod
     {
-        protected Mod(ModContentPack content) : base(content)
+        public Mod(ModContentPack content) : base(content) // Changement de protected à public
         {
             var femboyfoxes = new Harmony("weilbyte.rimworld.rimrpc");
             
