@@ -2,7 +2,7 @@
 
 <ModMetaData>
 	<name>RimRPC - RichPresence</name>
-	<author>Weilbyte</author>
+	<author>Weilbyte / d1rknwh1te3 / MasterPNJ </author>
 	<supportedVersions>
 		<li>1.0</li>
 		<li>1.1</li>
@@ -15,6 +15,8 @@
 		Discord Rich Presence for RimWorld!
 		1.4/1.5 support is here! With French translation!
 	</description>
+	<url>https://github.com/MasterPNJ/RimWorldRPC</url>
+	<url>https://github.com/d1rknwh1te3/RimWorldRPC</url>
 	<url>https://github.com/Weilbyte/RWRichPresence</url>
 	<packageId>weilbyte.rimrpc</packageId>
 </ModMetaData>
