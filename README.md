@@ -1,6 +1,6 @@
 
 <p align="center">
-<img src="https://i.imgur.com/ruELjgO.png">
+<img src="https://i.imgur.com/0bQFhhY.png">
 </p>
 
 # RWRichPresence
