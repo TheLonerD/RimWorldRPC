@@ -53,3 +53,4 @@ d1rknwh1te3 ( for 1.4 update ) : https://github.com/d1rknwh1te3/RimWorldRPC
 ## Links
 
 [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1463057070)
+[Steam 1.4/1.5 version](https://steamcommunity.com/sharedfiles/filedetails/?id=3291415439)
