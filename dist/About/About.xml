@@ -9,10 +9,11 @@
 		<li>1.2</li>
 		<li>1.3</li>
 		<li>1.4</li>
+		<li>1.5</li>
 	</supportedVersions>
 	<description>
 		Discord Rich Presence for RimWorld!
-		1.4 support is here!
+		1.4/1.5 support is here! With French translation!
 	</description>
 	<url>https://github.com/Weilbyte/RWRichPresence</url>
 	<packageId>weilbyte.rimrpc</packageId>

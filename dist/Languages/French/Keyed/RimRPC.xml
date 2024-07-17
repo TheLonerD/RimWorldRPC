@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+    <RPC_CategoryLabel>RimRPC</RPC_CategoryLabel>
+    <RPC_ColonyLabel>Nom de la colonie</RPC_ColonyLabel>
+    <RPC_ColonistCountLabel>Nombre de colons</RPC_ColonistCountLabel>
+    <RPC_BiomeLabel>Biome actuel</RPC_BiomeLabel>
+    <RPC_YearLabel>Année en cours</RPC_YearLabel>
+    <RPC_YearShortLabel>Raccourcir le texte de l'année</RPC_YearShortLabel>
+    <RPC_QuadrumLabel>Quadrum actuel</RPC_QuadrumLabel>
+    <RPC_DayLabel>Jour actuel</RPC_DayLabel>
+    <RPC_HourLabel>Heure de la journée en cours</RPC_HourLabel>
+    <RPC_TimeLabel>Durée de la session de jeu (Nécessite un redémarrage)</RPC_TimeLabel>
+    <RPC_UpdateLabel>Mise à jour manuelle de la présence</RPC_UpdateLabel>
+	
+    <CustomTopCheckbox>Texte personnalisé (en haut)</CustomTopCheckbox>
+    <CustomBottomCheckbox>Texte personnalisé (en bas)</CustomBottomCheckbox>
+    <CustomTopLabel>Texte</CustomTopLabel>
+    <CustomBottomLabel>Texte </CustomBottomLabel>
+
+	<RPC_MainMenu>Menu principal</RPC_MainMenu>
+	<RPC_Day>Jour</RPC_Day>
+	<RPC_Colonists>Colons</RPC_Colonists>
+	<RPC_Hour>h</RPC_Hour>
+	<RPC_Years>Année</RPC_Years>
+	<RPC_ShortYears>y</RPC_ShortYears>
+	<RPC_Playing>Jouer !</RPC_Playing>
+</LanguageData>
