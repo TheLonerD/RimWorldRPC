@@ -47,6 +47,7 @@ Make sure RimWorld is added as a game in Discord's settings.
 
 ## Credits
 Jdalt40
+d1rknwh1te3 ( for 1.4 update )
 
 ## Links
 
