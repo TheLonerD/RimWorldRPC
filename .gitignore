@@ -355,3 +355,7 @@ MigrationBackup/
 # Rimworld Libraries 
 Assembly-CSharp.dll
 UnityEngine.CoreModule.dll
+
+# Steam info
+upload_mod.txt
+workshop.vdf
