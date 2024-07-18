@@ -2,6 +2,7 @@ using HarmonyLib;
 using RimWorld;
 using Verse;
 using System;
+using System.Reflection;
 
 namespace RimRPC
 {
@@ -12,21 +13,17 @@ namespace RimRPC
         {
             Log.Message("RimRPC: Initializing Harmony patches...");
             var harmony = new Harmony("com.rimworld.mod.rimrpc");
-            try
-            {
-                harmony.PatchAll();
-                Log.Message("RimRPC: Harmony patches applied successfully.");
-            }
-            catch (Exception ex)
-            {
-                Log.Error("RimRPC: Failed to apply Harmony patches. Exception: " + ex);
-            }
+            harmony.PatchAll();
         }
 
         [HarmonyPatch(typeof(Messages))]
-        [HarmonyPatch("Message", new Type[] { typeof(TaggedString), typeof(MessageTypeDef), typeof(bool) })]
         public static class Messages_Message_Patch
         {
+            static MethodBase TargetMethod()
+            {
+                return AccessTools.Method(typeof(Messages), "Message", new Type[] { typeof(TaggedString), typeof(MessageTypeDef), typeof(bool) });
+            }
+
             public static void Postfix(TaggedString text, MessageTypeDef def)
             {
                 RimRPC.UpdateLastEvent($"Event: {text}");
