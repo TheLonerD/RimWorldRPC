@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Verse;
+using System.Linq;
 
 namespace RimRPC
 {
@@ -65,6 +66,22 @@ namespace RimRPC
             // Nouvelle option
             listingStandard.CheckboxLabeled("RPC_ShowLastEvent".Translate() + "  ", ref Settings.ShowLastEvent);
 
+            if (listingStandard.ButtonText("RPC_UpdateLabel".Translate()))
+            {
+                var world = Current.Game?.World;
+                if (world != null)
+                {
+                    StateHandler.PushState(Current.Game.CurrentMap);
+                    
+                    // Update last event with the latest message from the letter stack
+                    var lastLetter = Find.LetterStack.LettersListForReading.LastOrDefault();
+                    if (lastLetter != null)
+                    {
+                        RimRPC.UpdateLastEvent($"{lastLetter.Label}");
+                    }
+                }
+            }
+
             listingStandard.End();
             Settings.Write();
         }
@@ -93,14 +110,6 @@ namespace RimRPC
 
             if (Settings.RpcCustomBottom)
                 Settings.RpcCustomBottomText = listingStandard.TextEntryLabeled("CustomBottomLabel".Translate() + " ", Settings.RpcCustomBottomText);
-
-
-            if (listingStandard.ButtonText("RPC_UpdateLabel".Translate()))
-            {
-                var world = Current.Game?.World;
-                if (world != null)
-                    StateHandler.PushState(Current.Game.CurrentMap);
-            }
         }
     }
 }

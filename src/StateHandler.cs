@@ -1,5 +1,7 @@
 ﻿using RimWorld;
 using Verse;
+using System.Linq; // Ajout de cette ligne
+using System.Collections.Generic; // Ajout de cette ligne
 
 namespace RimRPC
 {
@@ -73,6 +75,13 @@ namespace RimRPC
 
                 if (RWRPCMod.Settings.RpcTime)
                     RimRPC.Presence.StartTimestamp = RimRPC.Started;
+
+                // Update Last Event
+                var lastLetter = Find.LetterStack.LettersListForReading.LastOrDefault();
+                if (lastLetter != null)
+                {
+                    RimRPC.UpdateLastEvent($"Event: {lastLetter.Label}()");
+                }
 
                 DiscordRPC.UpdatePresence(ref RimRPC.Presence);
             }
