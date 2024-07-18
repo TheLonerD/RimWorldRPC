@@ -10,6 +10,7 @@
     <RPC_DayLabel>Jour actuel</RPC_DayLabel>
     <RPC_HourLabel>Heure de la journée en cours</RPC_HourLabel>
     <RPC_TimeLabel>Durée de la session de jeu (Nécessite un redémarrage)</RPC_TimeLabel>
+    <RPC_ShowLastEvent>Afficher le dernier événement</RPC_ShowLastEvent>
     <RPC_UpdateLabel>Mise à jour manuelle de la présence</RPC_UpdateLabel>
 	
     <CustomTopCheckbox>Texte personnalisé (en haut)</CustomTopCheckbox>

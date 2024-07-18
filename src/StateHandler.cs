@@ -43,7 +43,6 @@ namespace RimRPC
             
             if (world == null)
                 RimRPC.Presence.Details = "RPC_MainMenu".Translate();
-            
             else
             {
                 var latitude = (map == null) ? 0f : Find.WorldGrid.LongLatOf(map.Tile).y;
@@ -74,9 +73,9 @@ namespace RimRPC
 
                 if (RWRPCMod.Settings.RpcTime)
                     RimRPC.Presence.StartTimestamp = RimRPC.Started;
-            }
 
-            DiscordRPC.UpdatePresence(ref RimRPC.Presence);
+                DiscordRPC.UpdatePresence(ref RimRPC.Presence);
+            }
         }
     }
 }
