@@ -12,7 +12,15 @@ namespace RimRPC
         {
             Log.Message("RimRPC: Initializing Harmony patches...");
             var harmony = new Harmony("com.rimworld.mod.rimrpc");
-            harmony.PatchAll();
+            try
+            {
+                harmony.PatchAll();
+                Log.Message("RimRPC: Harmony patches applied successfully.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error("RimRPC: Failed to apply Harmony patches. Exception: " + ex);
+            }
         }
 
         [HarmonyPatch(typeof(Messages))]
