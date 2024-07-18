@@ -50,6 +50,8 @@ Jdalt40
 
 d1rknwh1te3 ( for 1.4 update ) : https://github.com/d1rknwh1te3/RimWorldRPC
 
+Weilbyte ( Original author ) : https://github.com/Weilbyte/RWRichPresence
+
 ## Links
 
 [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1463057070)
