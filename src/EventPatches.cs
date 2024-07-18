@@ -11,8 +11,15 @@ namespace RimRPC
         {
             Log.Message("RimRPC: Initializing Harmony patches...");
             var harmony = new Harmony("com.rimworld.mod.rimrpc");
-            harmony.PatchAll();
-            Log.Message("RimRPC: Harmony patches applied.");
+            try
+            {
+                harmony.PatchAll();
+                Log.Message("RimRPC: Harmony patches applied successfully.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error("RimRPC: Failed to apply Harmony patches. Exception: " + ex);
+            }
         }
 
         [HarmonyPatch(typeof(IncidentWorker_Raid), "TryExecuteWorker")]
@@ -39,11 +46,21 @@ namespace RimRPC
             public static void Postfix(Building __instance)
             {
                 Log.Message($"RimRPC: Patch for Building_SpawnSetup applied. Building created: {__instance.def.defName}");
-                if (__instance.def.building.isColony)
+                if (__instance.def.building != null && __instance.def.building.isColony)
                 {
                     Log.Message("RimRPC: Colony building detected!");
                     RimRPC.UpdateLastEvent("Dernier événement : Colonie établie");
                 }
+            }
+        }
+
+        [HarmonyPatch(typeof(Messages), "Message")]
+        public static class Messages_Message_Patch
+        {
+            public static void Postfix(TaggedString text, MessageTypeDef def)
+            {
+                Log.Message($"RimRPC: New message detected: {text}");
+                RimRPC.UpdateLastEvent($"Dernier événement : {text}");
             }
         }
 

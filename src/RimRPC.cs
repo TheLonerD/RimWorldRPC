@@ -7,16 +7,23 @@ namespace RimRPC
 {
     public class Mod : Verse.Mod
     {
-        public Mod(ModContentPack content) : base(content) // Changement de protected à public
+        public Mod(ModContentPack content) : base(content)
         {
             Log.Message("RimRPC: Initializing mod...");
-            var femboyfoxes = new Harmony("weilbyte.rimworld.rimrpc");
+            var harmony = new Harmony("weilbyte.rimworld.rimrpc");
 
             MethodInfo targetmethod = AccessTools.Method(typeof(GenScene), "GoToMainMenu");
             HarmonyMethod postfixmethod = new HarmonyMethod(typeof(RimRPC).GetMethod("GoToMainMenu_Postfix"));
 
-            femboyfoxes.Patch(targetmethod, null, postfixmethod);
-            Log.Message("RimRPC: Main menu patch applied.");
+            try
+            {
+                harmony.Patch(targetmethod, null, postfixmethod);
+                Log.Message("RimRPC: Main menu patch applied successfully.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error("RimRPC: Failed to apply main menu patch. Exception: " + ex);
+            }
 
             RimRPC.BootMeUp();
         }
@@ -56,6 +63,7 @@ namespace RimRPC
 
         public static void UpdateLastEvent(string eventDescription)
         {
+            Log.Message($"RimRPC: Attempting to update last event with: {eventDescription}");
             if (RWRPCMod.Settings.ShowLastEvent)
             {
                 LastEvent = eventDescription;
