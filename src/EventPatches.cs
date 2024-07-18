@@ -1,6 +1,7 @@
 using HarmonyLib;
 using RimWorld;
 using Verse;
+using System;  // Ajout de cette ligne
 
 namespace RimRPC
 {
@@ -46,7 +47,7 @@ namespace RimRPC
             public static void Postfix(Building __instance)
             {
                 Log.Message($"RimRPC: Patch for Building_SpawnSetup applied. Building created: {__instance.def.defName}");
-                if (__instance.def.building != null && __instance.def.building.isColony)
+                if (__instance.def.building != null && __instance.def.building.isNaturalRock)
                 {
                     Log.Message("RimRPC: Colony building detected!");
                     RimRPC.UpdateLastEvent("Dernier événement : Colonie établie");

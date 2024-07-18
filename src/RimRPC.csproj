@@ -36,6 +36,7 @@
 	<ItemGroup>
 		<Compile Include="Details.cs" />
 		<Compile Include="DiscordRPC.cs" />
+		<Compile Include="EventPatches.cs" />
 		<Compile Include="MapCompInjector.cs" />
 		<Compile Include="MapCompHandler.cs" />
 		<Compile Include="ModSettings.cs" />
@@ -48,10 +49,7 @@
 		<PackageReference Include="Krafs.Rimworld.Ref">
 			<Version>1.5.4146</Version>
 		</PackageReference>
-		<PackageReference Include="Lib.Harmony">
-			<Version>2.3.3</Version>
-			<ExcludeAssets>runtime</ExcludeAssets>
-		</PackageReference>
+		<PackageReference Include="HarmonyLib" Version="2.3.3" />
 	</ItemGroup>
 	<ItemGroup />
 	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
