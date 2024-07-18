@@ -10,6 +10,7 @@
     <RPC_DayLabel>Отображение дня</RPC_DayLabel>
     <RPC_HourLabel>Отображение часа</RPC_HourLabel>
     <RPC_TimeLabel>Длина игровой сессии (Требуется рестарт)</RPC_TimeLabel>
+    <RPC_ShowLastEvent>Показать последнее событие</RPC_ShowLastEvent>
     <RPC_UpdateLabel>Принудительное обновление RPC</RPC_UpdateLabel>
 	
     <CustomTopCheckbox>Произвольный текст (Вверх)</CustomTopCheckbox>

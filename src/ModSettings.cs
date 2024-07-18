@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using Verse;
+using System.Linq;
 
 namespace RimRPC
 {
-    class RwrpcSettings : ModSettings
+    public class RwrpcSettings : ModSettings
     {
         #region variables
         public bool RpcColony = true;
@@ -17,6 +18,7 @@ namespace RimRPC
         public bool RpcBiome;
         public bool RpcCustomTop;
         public bool RpcCustomBottom;
+        public bool ShowLastEvent; // Nouvelle option
         public string RpcCustomTopText = "Example";
         public string RpcCustomBottomText = "Example";
         #endregion
@@ -24,7 +26,6 @@ namespace RimRPC
         public override void ExposeData()
         {
             base.ExposeData();
-
             Scribe_Values.Look(ref RpcColony, "RPC_Colony", true);
             Scribe_Values.Look(ref RpcColonistCount, "RPC_ColonistCount");
             Scribe_Values.Look(ref RpcBiome, "RPC_Biome");
@@ -35,13 +36,14 @@ namespace RimRPC
             Scribe_Values.Look(ref RpcHour, "RPC_Hour", true);
             Scribe_Values.Look(ref RpcTime, "RPC_Time", true);
             Scribe_Values.Look(ref RpcCustomTop, "RPC_CustomTop");
-            Scribe_Values.Look(ref RpcCustomTop, "RPC_CustomBottom");
+            Scribe_Values.Look(ref RpcCustomBottom, "RPC_CustomBottom");
+            Scribe_Values.Look(ref ShowLastEvent, "ShowLastEvent"); // Sauvegarde de la nouvelle option
             Scribe_Values.Look(ref RpcCustomTopText, "RPC_CustomTopText", "Example");
-            Scribe_Values.Look(ref RpcCustomTopText, "RPC_CustomBottomText", "*Example");
+            Scribe_Values.Look(ref RpcCustomBottomText, "RPC_CustomBottomText", "*Example");
         }
     }
 
-    class RWRPCMod : Mod
+    public class RWRPCMod : Mod
     {
         public static RwrpcSettings Settings;
         public RWRPCMod(ModContentPack content) : base(content)
@@ -60,6 +62,25 @@ namespace RimRPC
 
             //Custom field settings
             SetCustomFields(listingStandard);
+
+            // Nouvelle option
+            listingStandard.CheckboxLabeled("RPC_ShowLastEvent".Translate() + "  ", ref Settings.ShowLastEvent);
+
+            if (listingStandard.ButtonText("RPC_UpdateLabel".Translate()))
+            {
+                var world = Current.Game?.World;
+                if (world != null)
+                {
+                    StateHandler.PushState(Current.Game.CurrentMap);
+                    
+                    // Update last event with the latest message from the letter stack
+                    var lastLetter = Find.LetterStack.LettersListForReading.LastOrDefault();
+                    if (lastLetter != null)
+                    {
+                        RimRPC.UpdateLastEvent($"{lastLetter.Label}");
+                    }
+                }
+            }
 
             listingStandard.End();
             Settings.Write();
@@ -89,14 +110,6 @@ namespace RimRPC
 
             if (Settings.RpcCustomBottom)
                 Settings.RpcCustomBottomText = listingStandard.TextEntryLabeled("CustomBottomLabel".Translate() + " ", Settings.RpcCustomBottomText);
-
-
-            if (listingStandard.ButtonText("RPC_UpdateLabel".Translate()))
-            {
-                var world = Current.Game?.World;
-                if (world != null)
-                    StateHandler.PushState(Current.Game.CurrentMap);
-            }
         }
     }
 }
