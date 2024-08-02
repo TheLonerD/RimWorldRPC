@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace RimRPC
@@ -68,19 +69,80 @@ namespace RimRPC
             Ignore
         }
 
-        [DllImport("0discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_Initialize")]
+        static DiscordRPC()
+        {
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string libraryPath = Path.Combine(basePath, "Mods/3291415439/Lib/");
+            string targetPath = Path.Combine(basePath, "MonoBleedingEdge/EmbedRuntime/");
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                libraryPath = Path.Combine(libraryPath, IntPtr.Size == 8 ? "x64/discord-rpc.dll" : "x86/discord-rpc.dll");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                libraryPath = Path.Combine(libraryPath, "discord-rpc.so");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                libraryPath = Path.Combine(libraryPath, "discord-rpc.dylib");
+            }
+
+            string targetLibraryPath = Path.Combine(targetPath, Path.GetFileName(libraryPath));
+            try
+            {
+                if (!File.Exists(targetLibraryPath))
+                {
+                    File.Copy(libraryPath, targetLibraryPath);
+                }
+
+                LoadLibrary(targetLibraryPath);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        private static void LoadLibrary(string path)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                IntPtr handle = LoadLibraryWindows(path);
+                if (handle == IntPtr.Zero)
+                {
+                    throw new Exception($"Failed to load library {path}, error: {Marshal.GetLastWin32Error()}");
+                }
+            }
+            else
+            {
+                IntPtr handle = dlopen(path, 2); // RTLD_NOW
+                if (handle == IntPtr.Zero)
+                {
+                    throw new Exception($"Failed to load library {path}");
+                }
+            }
+        }
+
+        [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Auto)]
+        private static extern IntPtr LoadLibraryWindows(string lpFileName);
+
+        [DllImport("libdl.so", SetLastError = true, CharSet = CharSet.Auto)]
+        private static extern IntPtr dlopen(string fileName, int flags);
+
+        [DllImport("discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_Initialize")]
         public static extern void Initialize(string applicationId, ref EventHandlers handlers, bool autoRegister, string optionalSteamId);
 
-        [DllImport("0discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_Shutdown")]
+        [DllImport("discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_Shutdown")]
         public static extern void Shutdown();
 
-        [DllImport("0discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_RunCallbacks")]
+        [DllImport("discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_RunCallbacks")]
         public static extern void RunCallbacks();
 
-        [DllImport("0discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_UpdatePresence")]
+        [DllImport("discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_UpdatePresence")]
         public static extern void UpdatePresence(ref RichPresence presence);
 
-        [DllImport("0discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_Respond")]
+        [DllImport("discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_Respond")]
         public static extern void Respond(string userId, Reply reply);
     }
 }
