@@ -21,14 +21,26 @@ RWRichPresence updates your Discord status with some information about your game
 * Year
 * Event ( new add )
 
-## Installation ( For before 1.5 only now )
+## Installation ( For 1.5 )
 *Skip to step 3 if you have the mod from Steam Workshop*
 
-1. Download the latest release [(link)](https://github.com/Weilbyte/RWRichPresence/releases)
-2. Extract the `RimRPC` folder from the zip to your RimWorld Mod folder as per usual.
-3. Go to Discord's `discord-rpc` release page. [(link)](https://github.com/discordapp/discord-rpc/releases)
-4. Download `discord-rpc-win.zip` for windows or `discord-rpc-linux.zip` if you are using linux.
-5. Open the zip and follow instructions below depending on your PC architecture and platform:  
+1. Download the latest release [(link)](https://github.com/MasterPNJ/RimWorldRPC/releases)
+2. Extract the folder '3291415439' from the zip to your RimWorld Mod folder as per usual. DON'T RENAME THE ZIP AND FOLDER!
+3. Run Rimworld and enable the mod, save and restart the game.
+4. If it's first time you enable the mod, you need to restart the game one more time.
+
+Have fun !
+
+## Installation ( For 1.4 and before )
+*Skip to step 3 if you have the mod from Steam Workshop*
+
+1. Download the latest release :
+  * For 1.4 ( d1rknwh1te3 ) [(link 1.4)](https://github.com/d1rknwh1te3/RimWorldRPC/releases)
+  * For 1.3 & before ( original author ) [(link 1.3 & before)](https://github.com/Weilbyte/RWRichPresence/releases)
+3. Extract the `RimRPC` folder from the zip to your RimWorld Mod folder as per usual.
+4. Go to Discord's `discord-rpc` release page. [(link)](https://github.com/discordapp/discord-rpc/releases)
+5. Download `discord-rpc-win.zip` for windows or `discord-rpc-linux.zip` if you are using linux.
+6. Open the zip and follow instructions below depending on your PC architecture and platform:  
   * *(Windows 32 bit)*  Copy  `discord-rpc\win32-dynamic\bin\discord-rpc.dll` into your RimWorld folder - `RimWorld\MonoBleedingEdge\EmbedRuntime`  
   * *(Windows 64 bit)* Copy `discord-rpc\win64-dynamic\bin\discord-rpc.dll` into your RimWorld folder - `RimWorld\MonoBleedingEdge\EmbedRuntime` or for 1.1 `Rimworld\RimWorldWin64_Data\Plugins`
   * *(Linux 64 bit)* Copy `discord-rpc\linux-dynamic\lib\discord-rpc.so` into your RimWorld folder - `RimWorld/MonoBleedingEdge/EmbedRuntime`
