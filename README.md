@@ -19,8 +19,9 @@ RWRichPresence updates your Discord status with some information about your game
 * Quadrum
 * Amount of time your game has been running for
 * Year
+* Event ( new add )
 
-## Installation
+## Installation ( For before 1.5 only now )
 *Skip to step 3 if you have the mod from Steam Workshop*
 
 1. Download the latest release [(link)](https://github.com/Weilbyte/RWRichPresence/releases)
