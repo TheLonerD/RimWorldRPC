@@ -5,7 +5,6 @@ namespace RimRPC
 {
     public class RwrpcSettings : ModSettings
     {
-        // Ajoutez les propriétés manquantes
         public bool RpcCustomBottom = false;
         public string RpcCustomBottomText = "";
         public bool RpcCustomTop = false;
@@ -18,8 +17,6 @@ namespace RimRPC
         public bool RpcBiome = false;
         public bool RpcColony = false;
         public bool RpcColonistCount = false;
-
-        // Ajoutez d'autres propriétés si nécessaire
 
         public override void ExposeData()
         {
@@ -36,8 +33,6 @@ namespace RimRPC
             Scribe_Values.Look(ref RpcBiome, "RpcBiome", false);
             Scribe_Values.Look(ref RpcColony, "RpcColony", false);
             Scribe_Values.Look(ref RpcColonistCount, "RpcColonistCount", false);
-
-            // Sauvegardez d'autres propriétés si nécessaire
         }
     }
 
@@ -60,7 +55,124 @@ namespace RimRPC
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
-            // Si vous avez des paramètres à afficher, implémentez l'interface ici
+            var listing = new Listing_Standard();
+            listing.Begin(inRect);
+
+            // Variable pour détecter les changements
+            bool settingsChanged = false;
+
+            // Pour RpcCustomBottom
+            bool previousRpcCustomBottom = Settings.RpcCustomBottom;
+            listing.CheckboxLabeled("Activer le texte personnalisé en bas", ref Settings.RpcCustomBottom, "Affiche un texte personnalisé en bas de la Rich Presence.");
+            if (Settings.RpcCustomBottom != previousRpcCustomBottom)
+            {
+                settingsChanged = true;
+            }
+
+            if (Settings.RpcCustomBottom)
+            {
+                string previousRpcCustomBottomText = Settings.RpcCustomBottomText;
+                listing.Label("Texte personnalisé en bas :");
+                Settings.RpcCustomBottomText = listing.TextEntry(Settings.RpcCustomBottomText);
+                if (Settings.RpcCustomBottomText != previousRpcCustomBottomText)
+                {
+                    settingsChanged = true;
+                }
+            }
+
+            // Pour RpcCustomTop
+            bool previousRpcCustomTop = Settings.RpcCustomTop;
+            listing.CheckboxLabeled("Activer le texte personnalisé en haut", ref Settings.RpcCustomTop, "Affiche un texte personnalisé en haut de la Rich Presence.");
+            if (Settings.RpcCustomTop != previousRpcCustomTop)
+            {
+                settingsChanged = true;
+            }
+
+            if (Settings.RpcCustomTop)
+            {
+                string previousRpcCustomTopText = Settings.RpcCustomTopText;
+                listing.Label("Texte personnalisé en haut :");
+                Settings.RpcCustomTopText = listing.TextEntry(Settings.RpcCustomTopText);
+                if (Settings.RpcCustomTopText != previousRpcCustomTopText)
+                {
+                    settingsChanged = true;
+                }
+            }
+
+            // Groupe pour les informations du temps en fessant pareil que RpcCustomBottom mais en les groupant
+            listing.Gap();
+            listing.Label("Informations du temps :");
+
+            bool previousRpcDay = Settings.RpcDay;
+            listing.CheckboxLabeled("Jour", ref Settings.RpcDay, "Affiche le jour en jeu.");
+            if (Settings.RpcDay != previousRpcDay)
+            {
+                settingsChanged = true;
+            }
+            
+            bool previousRpcHour = Settings.RpcHour;
+            listing.CheckboxLabeled("Heure", ref Settings.RpcHour, "Affiche l'heure en jeu.");
+            if (Settings.RpcHour != previousRpcHour)
+            {
+                settingsChanged = true;
+            }
+
+            bool previousRpcQuadrum = Settings.RpcQuadrum;
+            listing.CheckboxLabeled("Quadrimestre", ref Settings.RpcQuadrum, "Affiche le quadrimestre en jeu.");
+            if (Settings.RpcQuadrum != previousRpcQuadrum)
+            {
+                settingsChanged = true;
+            }
+
+            bool previousRpcYear = Settings.RpcYear;
+            listing.CheckboxLabeled("Année", ref Settings.RpcYear, "Affiche l'année en jeu.");
+            if (Settings.RpcYear != previousRpcYear)
+            {
+                settingsChanged = true;
+            }
+
+            bool previousRpcYearShort = Settings.RpcYearShort;
+            listing.CheckboxLabeled("Année courte", ref Settings.RpcYearShort, "Affiche l'année en jeu sous forme courte.");
+            if (Settings.RpcYearShort != previousRpcYearShort)
+            {
+                settingsChanged = true;
+            }
+
+            // Groupe pour les informations de la colonie en fessant pareil que RpcCustomBottom mais en les groupant
+            listing.Gap();
+            listing.Label("Informations de la colonie :");
+
+            bool previousRpcBiome = Settings.RpcBiome;
+            listing.CheckboxLabeled("Biome", ref Settings.RpcBiome, "Affiche le biome actuel de la colonie.");
+            if (Settings.RpcBiome != previousRpcBiome)
+            {
+                settingsChanged = true;
+            }
+
+            bool previousRpcColony = Settings.RpcColony;
+            listing.CheckboxLabeled("Nom de la colonie", ref Settings.RpcColony, "Affiche le nom de la colonie actuelle.");
+            if (Settings.RpcColony != previousRpcColony)
+            {
+                settingsChanged = true;
+            }
+
+            bool previousRpcColonistCount = Settings.RpcColonistCount;
+            listing.CheckboxLabeled("Nombre de colons", ref Settings.RpcColonistCount, "Affiche le nombre de colons dans la colonie.");
+            if (Settings.RpcColonistCount != previousRpcColonistCount)
+            {
+                settingsChanged = true;
+            }
+
+            listing.End();
+
+            if (settingsChanged)
+            {
+                // Sauvegarder les paramètres
+                Settings.Write();
+
+                // Mettre à jour la Rich Presence
+                RimRPC.UpdatePresence();
+            }
         }
     }
 }
