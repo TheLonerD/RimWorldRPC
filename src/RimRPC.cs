@@ -1,112 +1,87 @@
-﻿using HarmonyLib;
-using System;
-using System.Reflection;
+﻿using System;
+using DiscordGameSDKWrapper;
 using Verse;
+using UnityEngine;
 
 namespace RimRPC
 {
-    public class Mod : Verse.Mod
-    {
-        public Mod(ModContentPack content) : base(content)
-        {
-            Log.Message("RimRPC: Initializing mod...");
-            var harmony = new Harmony("weilbyte.rimworld.rimrpc");
-
-            MethodInfo targetmethod = AccessTools.Method(typeof(GenScene), "GoToMainMenu");
-            HarmonyMethod postfixmethod = new HarmonyMethod(typeof(RimRPC).GetMethod("GoToMainMenu_Postfix"));
-
-            try
-            {
-                harmony.Patch(targetmethod, null, postfixmethod);
-                Log.Message("RimRPC: Main menu patch applied successfully.");
-            }
-            catch (Exception ex)
-            {
-                Log.Error("RimRPC: Failed to apply main menu patch. Exception: " + ex);
-            }
-
-            RimRPC.BootMeUp();
-        }
-    }
-
     public class RimRPC
     {
-        internal static DiscordRPC.RichPresence Presence;
-        internal static string Colony;
-        internal static int onDay;
-        internal static long Started = (DateTime.UtcNow.Ticks - new DateTime(1970, 1, 1).Ticks) / TimeSpan.TicksPerSecond;
-        internal static string LastEvent; // Nouvelle variable
+        private const long ClientId = 1288106578825969816; // Votre application ID
+
+        internal static Discord discord;
+        internal static long Started = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
         public static void BootMeUp()
         {
-            Log.Message("RimRPC: Initializing Discord RPC...");
-            DiscordRPC.EventHandlers eventHandlers = default;
-            eventHandlers.ReadyCallback = (DiscordRPC.ReadyCallback)Delegate.Combine(eventHandlers.ReadyCallback, new DiscordRPC.ReadyCallback(ReadyCallback));
-            eventHandlers.DisconnectedCallback = (DiscordRPC.DisconnectedCallback)Delegate.Combine(eventHandlers.DisconnectedCallback, new DiscordRPC.DisconnectedCallback(DisconnectedCallback));
-            eventHandlers.ErrorCallback = (DiscordRPC.ErrorCallback)Delegate.Combine(eventHandlers.ErrorCallback, new DiscordRPC.ErrorCallback(ErrorCallback));
-            eventHandlers.JoinCallback = (DiscordRPC.JoinCallback)Delegate.Combine(eventHandlers.JoinCallback, new DiscordRPC.JoinCallback(JoinCallback));
-            eventHandlers.SpectateCallback = (DiscordRPC.SpectateCallback)Delegate.Combine(eventHandlers.SpectateCallback, new DiscordRPC.SpectateCallback(SpectateCallback));
-            eventHandlers.RequestCallback = (DiscordRPC.RequestCallback)Delegate.Combine(eventHandlers.RequestCallback, new DiscordRPC.RequestCallback(RequestCallback));
+            Initialize();
+            UpdatePresence("Dans le menu principal", null);
+        }
 
-            DiscordRPC.Initialize("428272711702282252", ref eventHandlers, true, "0612");
-
-            Presence = new DiscordRPC.RichPresence
+        public static void Initialize()
+        {
+            try
             {
-                LargeImageKey = "logo",
-                State = "RPC_MainMenu".Translate()
+                discord = new Discord(ClientId, (UInt64)CreateFlags.NoRequireDiscord);
+                Log.Message("RimRPC : Discord Game SDK initialisé avec le client ID par défaut.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"RimRPC : Échec de l'initialisation du Discord Game SDK : {ex.Message}");
+            }
+        }
+
+        public static void UpdatePresence(string state, string details)
+        {
+            if (discord == null)
+            {
+                Log.Error("RimRPC : Discord SDK non initialisé.");
+                return;
+            }
+
+            var activityManager = discord.GetActivityManager();
+
+            var activity = new Activity
+            {
+                State = state,
+                Details = details,
+                Timestamps = new ActivityTimestamps
+                {
+                    Start = Started
+                },
+                Assets = new ActivityAssets
+                {
+                    LargeImage = "logo", // Assurez-vous que "logo" est ajouté dans les assets de votre application Discord
+                    LargeText = "RimWorld"
+                }
             };
 
-            DiscordRPC.UpdatePresence(ref Presence);
-            ReadyCallback();
-            Log.Message("RimRPC: Discord RPC initialized.");
-        }
-
-        public static void UpdateLastEvent(string eventDescription)
-        {
-            Log.Message($"RimRPC: Attempting to update last event with: {eventDescription}");
-            if (RWRPCMod.Settings.ShowLastEvent)
+            activityManager.UpdateActivity(activity, (result) =>
             {
-                LastEvent = eventDescription;
-                Presence.Details = LastEvent;
-                Log.Message($"RimRPC: Updating last event: {LastEvent}");
-                DiscordRPC.UpdatePresence(ref Presence);
-            }
-            else
+                if (result == Result.Ok)
+                {
+                    Log.Message("RimRPC : Rich Presence mise à jour avec succès.");
+                }
+                else
+                {
+                    Log.Error($"RimRPC : Échec de la mise à jour de la Rich Presence : {result}");
+                }
+            });
+        }
+
+        public static void Shutdown()
+        {
+            if (discord != null)
             {
-                Log.Message("RimRPC: ShowLastEvent is disabled.");
+                discord.Dispose();
+                discord = null;
+                Log.Message("RimRPC : Discord SDK fermé.");
             }
-        }
-
-        private static void RequestCallback(DiscordRPC.JoinRequest request)
-        {
-        }
-
-        private static void SpectateCallback(string secret)
-        {
-        }
-
-        private static void JoinCallback(string secret)
-        {
-        }
-
-        private static void ErrorCallback(int errorCode, string message)
-        {
-            Log.Message($"RichPresence :: ErrorCallback: {errorCode} {message}");
-        }
-
-        private static void DisconnectedCallback(int errorCode, string message)
-        {
-            Log.Message($"RichPresence :: DisconnectedCallback: {errorCode} {message}");
-        }
-
-        private static void ReadyCallback()
-        {
-            Log.Message("RichPresence :: Running");
         }
 
         public static void GoToMainMenu_Postfix()
         {
-            StateHandler.MenuState();
+            UpdatePresence("Dans le menu principal", null);
         }
     }
 }

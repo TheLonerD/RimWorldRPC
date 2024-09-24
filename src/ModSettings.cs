@@ -1,115 +1,66 @@
 ﻿using UnityEngine;
 using Verse;
-using System.Linq;
 
 namespace RimRPC
 {
     public class RwrpcSettings : ModSettings
     {
-        #region variables
-        public bool RpcColony = true;
-        public bool RpcColonistCount;
-        public bool RpcYear;
-        public bool RpcYearShort = true;
-        public bool RpcQuadrum = true;
-        public bool RpcDay = true;
-        public bool RpcHour = true;
-        public bool RpcTime = true;
-        public bool RpcBiome;
-        public bool RpcCustomTop;
-        public bool RpcCustomBottom;
-        public bool ShowLastEvent; // Nouvelle option
-        public string RpcCustomTopText = "Example";
-        public string RpcCustomBottomText = "Example";
-        #endregion
+        // Ajoutez les propriétés manquantes
+        public bool RpcCustomBottom = false;
+        public string RpcCustomBottomText = "";
+        public bool RpcCustomTop = false;
+        public string RpcCustomTopText = "";
+        public bool RpcDay = false;
+        public bool RpcHour = false;
+        public bool RpcQuadrum = false;
+        public bool RpcYear = false;
+        public bool RpcYearShort = false;
+        public bool RpcBiome = false;
+        public bool RpcColony = false;
+        public bool RpcColonistCount = false;
+
+        // Ajoutez d'autres propriétés si nécessaire
 
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look(ref RpcColony, "RPC_Colony", true);
-            Scribe_Values.Look(ref RpcColonistCount, "RPC_ColonistCount");
-            Scribe_Values.Look(ref RpcBiome, "RPC_Biome");
-            Scribe_Values.Look(ref RpcYear, "RPC_Year");
-            Scribe_Values.Look(ref RpcYearShort, "RPC_YearShort", true);
-            Scribe_Values.Look(ref RpcQuadrum, "RPC_Quadrum", true);
-            Scribe_Values.Look(ref RpcDay, "RPC_Day", true);
-            Scribe_Values.Look(ref RpcHour, "RPC_Hour", true);
-            Scribe_Values.Look(ref RpcTime, "RPC_Time", true);
-            Scribe_Values.Look(ref RpcCustomTop, "RPC_CustomTop");
-            Scribe_Values.Look(ref RpcCustomBottom, "RPC_CustomBottom");
-            Scribe_Values.Look(ref ShowLastEvent, "ShowLastEvent"); // Sauvegarde de la nouvelle option
-            Scribe_Values.Look(ref RpcCustomTopText, "RPC_CustomTopText", "Example");
-            Scribe_Values.Look(ref RpcCustomBottomText, "RPC_CustomBottomText", "*Example");
+            Scribe_Values.Look(ref RpcCustomBottom, "RpcCustomBottom", false);
+            Scribe_Values.Look(ref RpcCustomBottomText, "RpcCustomBottomText", "");
+            Scribe_Values.Look(ref RpcCustomTop, "RpcCustomTop", false);
+            Scribe_Values.Look(ref RpcCustomTopText, "RpcCustomTopText", "");
+            Scribe_Values.Look(ref RpcDay, "RpcDay", false);
+            Scribe_Values.Look(ref RpcHour, "RpcHour", false);
+            Scribe_Values.Look(ref RpcQuadrum, "RpcQuadrum", false);
+            Scribe_Values.Look(ref RpcYear, "RpcYear", false);
+            Scribe_Values.Look(ref RpcYearShort, "RpcYearShort", false);
+            Scribe_Values.Look(ref RpcBiome, "RpcBiome", false);
+            Scribe_Values.Look(ref RpcColony, "RpcColony", false);
+            Scribe_Values.Look(ref RpcColonistCount, "RpcColonistCount", false);
+
+            // Sauvegardez d'autres propriétés si nécessaire
         }
     }
 
     public class RWRPCMod : Mod
     {
         public static RwrpcSettings Settings;
+
+        public static string ModDirectory;
+
         public RWRPCMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<RwrpcSettings>();
+            ModDirectory = content.RootDir;
+
+            // Initialisation du mod
+            RimRPC.BootMeUp();
         }
-        public override string SettingsCategory() => "RPC_CategoryLabel".Translate();
+
+        public override string SettingsCategory() => "RimRPC Mod";
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
-            Listing_Standard listingStandard = new Listing_Standard();
-            listingStandard.Begin(inRect);
-
-            //Default settings
-            SetDefaultSettings(listingStandard);
-
-            //Custom field settings
-            SetCustomFields(listingStandard);
-
-            // Nouvelle option
-            listingStandard.CheckboxLabeled("RPC_ShowLastEvent".Translate() + "  ", ref Settings.ShowLastEvent);
-
-            if (listingStandard.ButtonText("RPC_UpdateLabel".Translate()))
-            {
-                var world = Current.Game?.World;
-                if (world != null)
-                {
-                    StateHandler.PushState(Current.Game.CurrentMap);
-                    
-                    // Update last event with the latest message from the letter stack
-                    var lastLetter = Find.LetterStack.LettersListForReading.LastOrDefault();
-                    if (lastLetter != null)
-                    {
-                        RimRPC.UpdateLastEvent($"{lastLetter.Label}");
-                    }
-                }
-            }
-
-            listingStandard.End();
-            Settings.Write();
-        }
-
-        private static void SetDefaultSettings(Listing_Standard listingStandard)
-        {
-            listingStandard.CheckboxLabeled("RPC_ColonyLabel".Translate() + " ", ref Settings.RpcColony);
-            listingStandard.CheckboxLabeled("RPC_ColonistCountLabel".Translate() + " ", ref Settings.RpcColonistCount);
-            listingStandard.CheckboxLabeled("RPC_BiomeLabel".Translate() + " ", ref Settings.RpcBiome);
-            listingStandard.CheckboxLabeled("RPC_YearLabel".Translate() + " ", ref Settings.RpcYear);
-            listingStandard.CheckboxLabeled("RPC_YearShortLabel".Translate() + " ", ref Settings.RpcYearShort);
-            listingStandard.CheckboxLabeled("RPC_QuadrumLabel".Translate() + " ", ref Settings.RpcQuadrum);
-            listingStandard.CheckboxLabeled("RPC_DayLabel".Translate() + "  ", ref Settings.RpcDay);
-            listingStandard.CheckboxLabeled("RPC_HourLabel".Translate() + "  ", ref Settings.RpcHour);
-            listingStandard.CheckboxLabeled("RPC_TimeLabel".Translate() + "  ", ref Settings.RpcTime);
-        }
-
-        private static void SetCustomFields(Listing_Standard listingStandard)
-        {
-            listingStandard.CheckboxLabeled("CustomTopCheckbox".Translate() + "  ", ref Settings.RpcCustomTop);
-
-            if (Settings.RpcCustomTop)
-                Settings.RpcCustomTopText = listingStandard.TextEntryLabeled("CustomTopLabel".Translate() + " ", Settings.RpcCustomTopText);
-
-            listingStandard.CheckboxLabeled("CustomBottomCheckbox".Translate() + "  ", ref Settings.RpcCustomBottom);
-
-            if (Settings.RpcCustomBottom)
-                Settings.RpcCustomBottomText = listingStandard.TextEntryLabeled("CustomBottomLabel".Translate() + " ", Settings.RpcCustomBottomText);
+            // Si vous avez des paramètres à afficher, implémentez l'interface ici
         }
     }
 }
