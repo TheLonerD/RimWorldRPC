@@ -46,9 +46,6 @@ namespace RimRPC
         {
             Settings = GetSettings<RwrpcSettings>();
             ModDirectory = content.RootDir;
-
-            // Initialisation du mod
-            RimRPC.BootMeUp();
         }
 
         public override string SettingsCategory() => "RimRPC Mod";

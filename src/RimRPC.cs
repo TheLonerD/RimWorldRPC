@@ -16,11 +16,12 @@ namespace RimRPC
         internal static long Started = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         internal static ActivityManager activityManager;
         internal static Activity activity;
-
+        /*
         static RimRPC()
         {
             BootMeUp();
         }
+        */
 
         public static void BootMeUp()
         {
@@ -175,37 +176,59 @@ namespace RimRPC
             var builder = new System.Text.StringBuilder();
 
             var tickManager = Find.TickManager;
-            if (tickManager != null)
-            {
-                var daysPassed = GenDate.DaysPassed;
-                var quadrum = GenDate.Quadrum(Find.TickManager.TicksAbs, Find.WorldGrid.LongLatOf(Find.CurrentMap.Tile).x);
-                var year = GenDate.Year(Find.TickManager.TicksAbs, Find.WorldGrid.LongLatOf(Find.CurrentMap.Tile).x);
+            var currentMap = Find.CurrentMap;
+            var worldGrid = Find.WorldGrid;
 
-                if (settings.RpcDay)
+            if (tickManager != null && currentMap != null && worldGrid != null)
+            {
+                var tile = currentMap.Tile;
+
+                // Vérifier si le tile est valide
+                if (tile >= 0 && tile < worldGrid.TilesCount)
                 {
-                    builder.Append($"Jour {daysPassed}");
+                    var longitude = worldGrid.LongLatOf(tile).x;
+                    var ticksAbs = tickManager.TicksAbs;
+
+                    var daysPassed = GenDate.DaysPassed;
+                    var quadrum = GenDate.Quadrum(ticksAbs, longitude);
+                    var year = GenDate.Year(ticksAbs, longitude);
+
+                    if (settings.RpcDay)
+                    {
+                        builder.Append($"Jour {daysPassed}");
+                    }
+                    if (settings.RpcQuadrum)
+                    {
+                        if (builder.Length > 0) builder.Append(" ");
+                        builder.Append($"{quadrum}");
+                    }
+                    if (settings.RpcYear)
+                    {
+                        if (builder.Length > 0) builder.Append(" ");
+                        builder.Append($"Année {year}");
+                    }
+                    else if (settings.RpcYearShort)
+                    {
+                        if (builder.Length > 0) builder.Append(" ");
+                        builder.Append($"An {year}");
+                    }
+                    if (settings.RpcHour)
+                    {
+                        int hour = GenLocalDate.HourOfDay(currentMap);
+                        if (builder.Length > 0) builder.Append(" ");
+                        builder.Append($"Heure {hour}");
+                    }
                 }
-                if (settings.RpcQuadrum)
+                else
                 {
-                    if (builder.Length > 0) builder.Append(" ");
-                    builder.Append($"{quadrum}");
+                    // Gérer le cas où le tile n'est pas valide
+                    builder.Append("En jeu");
                 }
-                if (settings.RpcYear)
-                {
-                    if (builder.Length > 0) builder.Append(" ");
-                    builder.Append($"Année {year}");
-                }
-                else if (settings.RpcYearShort)
-                {
-                    if (builder.Length > 0) builder.Append(" ");
-                    builder.Append($"An {year}");
-                }
-                if (settings.RpcHour)
-                {
-                    int hour = GenLocalDate.HourOfDay(Find.CurrentMap);
-                    if (builder.Length > 0) builder.Append(" ");
-                    builder.Append($"Heure {hour}");
-                }
+            }
+            else
+            {
+                // Le jeu n'est pas encore complètement initialisé
+                builder.Append("Dans le menu principal");
             }
 
             return builder.ToString();
@@ -213,7 +236,14 @@ namespace RimRPC
 
         private static string GetColonyName()
         {
-            return Find.World.info.name;
+            if (Find.World != null && Find.World.info != null)
+            {
+                return Find.World.info.name;
+            }
+            else
+            {
+                return "Dans le menu principal";
+            }
         }
 
         public static void Shutdown()
