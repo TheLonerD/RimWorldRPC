@@ -58,6 +58,10 @@ namespace RimRPC
             // Variable pour détecter les changements
             bool settingsChanged = false;
 
+            listing.Gap();
+            listing.Label("Texte personnalisé :");
+            listing.GapLine();
+
             // Pour RpcCustomBottom
             bool previousRpcCustomBottom = Settings.RpcCustomBottom;
             listing.CheckboxLabeled("Activer le texte personnalisé en bas", ref Settings.RpcCustomBottom, "Affiche un texte personnalisé en bas de la Rich Presence.");
@@ -99,6 +103,7 @@ namespace RimRPC
             // Groupe pour les informations du temps en fessant pareil que RpcCustomBottom mais en les groupant
             listing.Gap();
             listing.Label("Informations du temps :");
+            listing.GapLine();
 
             bool previousRpcDay = Settings.RpcDay;
             listing.CheckboxLabeled("Jour", ref Settings.RpcDay, "Affiche le jour en jeu.");
@@ -138,6 +143,7 @@ namespace RimRPC
             // Groupe pour les informations de la colonie en fessant pareil que RpcCustomBottom mais en les groupant
             listing.Gap();
             listing.Label("Informations de la colonie :");
+            listing.GapLine();
 
             bool previousRpcBiome = Settings.RpcBiome;
             listing.CheckboxLabeled("Biome", ref Settings.RpcBiome, "Affiche le biome actuel de la colonie.");
