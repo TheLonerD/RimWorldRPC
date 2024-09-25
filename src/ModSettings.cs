@@ -173,8 +173,11 @@ namespace RimRPC
                 // Sauvegarder les paramètres
                 Settings.Write();
 
-                // Mettre à jour la Rich Presence
-                RimRPC.UpdatePresence();
+                // Vérifier si le jeu est en cours avant de mettre à jour la Rich Presence
+                if (Current.ProgramState == ProgramState.Playing)
+                {
+                    RimRPC.UpdatePresence();
+                }
             }
         }
     }

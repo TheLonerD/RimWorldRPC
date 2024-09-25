@@ -148,7 +148,7 @@ namespace RimRPC
 
                 if (string.IsNullOrEmpty(details))
                 {
-                    details = "Joue à RimWorld";
+                    details = "Dans le menu principal";
                 }
 
                 return details;
@@ -242,7 +242,7 @@ namespace RimRPC
             }
             else
             {
-                return "Dans le menu principal";
+                return "Aucune colonie";
             }
         }
 
