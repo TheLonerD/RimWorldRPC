@@ -2,6 +2,7 @@ using HarmonyLib;
 using RimWorld;
 using Verse;
 using System;
+using System.Linq;
 using System.Reflection;
 
 namespace RimRPC
@@ -15,6 +16,16 @@ namespace RimRPC
             
             try
             {
+                var methods = AccessTools.GetDeclaredMethods(typeof(LetterStack))
+                    .Where(m => m.Name == "ReceiveLetter")
+                    .ToList();
+
+                foreach (var method in methods)
+                {
+                    Log.Message($"RimRPC : Méthode ReceiveLetter trouvée : {method.ToString()}");
+                }
+
+                // Appliquer les patches
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
                 Log.Message("RimRPC : Tous les patches ont été appliqués avec succès.");
             }
@@ -46,22 +57,59 @@ namespace RimRPC
         }
     }
 
+    // Patch pour Messages.Message(string, MessageTypeDef, bool)
+    [HarmonyPatch(typeof(Messages))]
+    [HarmonyPatch("Message", new Type[] { typeof(string), typeof(MessageTypeDef), typeof(bool) })]
+    public static class Messages_StringMessage_Patch
+    {
+        public static void Postfix(string text, MessageTypeDef def, bool historical)
+        {
+            if (!RWRPCMod.Settings.RpcShowGameMessages) return; 
+
+            Log.Message($"RimRPC : Message reçu (string) - {text}");
+            RimRPC.lastEventText = text;
+            RimRPC.lastEventTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            RimRPC.UpdatePresence();
+        }
+    }
+
+    // Patch pour Messages.Message(Message, bool)
     [HarmonyPatch(typeof(Messages))]
     [HarmonyPatch("Message", new Type[] { typeof(Message), typeof(bool) })]
     public static class Messages_Message_Patch
     {
         public static void Postfix(Message msg, bool historical)
         {
-            if (!RWRPCMod.Settings.RpcShowGameMessages) return; // Respecter les paramètres de l'utilisateur
+            if (!RWRPCMod.Settings.RpcShowGameMessages) return;
 
             string text = msg.text;
-            Log.Message($"RimRPC : Message reçu - {text}");
-
-            // Enregistrer l'événement et réinitialiser le timer
+            Log.Message($"RimRPC : Message reçu (Message) - {text}");
             RimRPC.lastEventText = text;
             RimRPC.lastEventTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            RimRPC.UpdatePresence();
+        }
+    }
 
-            // Mise à jour de la Rich Presence
+    [HarmonyPatch]
+    public static class LetterStack_ReceiveLetter_Patch
+    {
+        public static MethodBase TargetMethod()
+        {
+            return AccessTools.DeclaredMethod(
+                typeof(LetterStack),
+                "ReceiveLetter",
+                new Type[] { typeof(Letter), typeof(string), typeof(int), typeof(bool) }
+            );
+        }
+
+        public static void Postfix(Letter let, string debugInfo, int delayTicks, bool playSound)
+        {
+            if (!RWRPCMod.Settings.RpcShowGameMessages) return;
+
+            string text = $"Lettre : {let.Label}";
+            Log.Message($"RimRPC : Lettre reçue - {text}");
+            RimRPC.lastEventText = text;
+            RimRPC.lastEventTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             RimRPC.UpdatePresence();
         }
     }
