@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-    <RPC_CategoryLabel>RimRPC</RPC_CategoryLabel>
-    <RPC_ColonyLabel>Nom de la colonie</RPC_ColonyLabel>
+    <!-- Libellés de l'interface utilisateur -->
     <RPC_ColonistCountLabel>Nombre de colons</RPC_ColonistCountLabel>
     <RPC_BiomeLabel>Biome actuel</RPC_BiomeLabel>
-    <RPC_YearLabel>Année en cours</RPC_YearLabel>
-    <RPC_YearShortLabel>Raccourcir le texte de l'année</RPC_YearShortLabel>
-    <RPC_QuadrumLabel>Quadrum actuel</RPC_QuadrumLabel>
-    <RPC_DayLabel>Jour actuel</RPC_DayLabel>
-    <RPC_HourLabel>Heure de la journée en cours</RPC_HourLabel>
-    <RPC_TimeLabel>Durée de la session de jeu (Nécessite un redémarrage)</RPC_TimeLabel>
-    <RPC_ShowLastEvent>Afficher le dernier événement</RPC_ShowLastEvent>
-    <RPC_UpdateLabel>Mise à jour manuelle de la présence</RPC_UpdateLabel>
-	
-    <CustomTopCheckbox>Texte personnalisé (en haut)</CustomTopCheckbox>
-    <CustomBottomCheckbox>Texte personnalisé (en bas)</CustomBottomCheckbox>
-    <CustomTopLabel>Texte</CustomTopLabel>
-    <CustomBottomLabel>Texte </CustomBottomLabel>
-
-	<RPC_MainMenu>Menu principal</RPC_MainMenu>
-	<RPC_Day>Jour</RPC_Day>
-	<RPC_Colonists>Colons</RPC_Colonists>
-	<RPC_Hour>h</RPC_Hour>
-	<RPC_Years>Année</RPC_Years>
-	<RPC_ShortYears>y</RPC_ShortYears>
-	<RPC_Playing>Jouer !</RPC_Playing>
+    <RPC_ColonyLabel>Nom de la colonie</RPC_ColonyLabel>
+    <RPC_YearLabel>Année</RPC_YearLabel>
+    <RPC_YearShortLabel>Année raccourcie</RPC_YearShortLabel>
+    <RPC_QuadrumLabel>Quadrimestre</RPC_QuadrumLabel>
+    <RPC_DayLabel>Jour</RPC_DayLabel>
+    <RPC_HourLabel>Heure</RPC_HourLabel>
+    <RPC_MainMenu>Menu principal</RPC_MainMenu>
+    <RPC_Playing>En jeu</RPC_Playing>
+    
+    <!-- Options de personnalisation -->
+    <RPC_CustomTopCheckbox>Texte personnalisé (haut)</RPC_CustomTopCheckbox>
+    <RPC_CustomBottomCheckbox>Texte personnalisé (bas)</RPC_CustomBottomCheckbox>
+    <CustomTopLabel>Texte en haut</CustomTopLabel>
+    <CustomBottomLabel>Texte en bas</CustomBottomLabel>
+    
+    <!-- Messages d'erreur et succès -->
+    <RPC_InitSuccess>SDK Discord initialisé avec succès.</RPC_InitSuccess>
+    <RPC_InitFailure>Échec de l'initialisation du SDK Discord : {0}</RPC_InitFailure>
+    <RPC_UpdateSuccess>Rich Presence mise à jour avec succès.</RPC_UpdateSuccess>
+    <RPC_UpdateFailure>Échec de la mise à jour de la Rich Presence : {0}</RPC_UpdateFailure>
+    <RPC_Shutdown>SDK Discord fermé.</RPC_Shutdown>
 </LanguageData>

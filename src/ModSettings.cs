@@ -17,6 +17,7 @@ namespace RimRPC
         public bool RpcBiome = false;
         public bool RpcColony = false;
         public bool RpcColonistCount = false;
+        public bool RpcShowGameMessages = true;
 
         public override void ExposeData()
         {
@@ -33,6 +34,7 @@ namespace RimRPC
             Scribe_Values.Look(ref RpcBiome, "RpcBiome", false);
             Scribe_Values.Look(ref RpcColony, "RpcColony", false);
             Scribe_Values.Look(ref RpcColonistCount, "RpcColonistCount", false);
+            Scribe_Values.Look(ref RpcShowGameMessages, "RpcShowGameMessages", true);
         }
     }
 
@@ -162,6 +164,17 @@ namespace RimRPC
             bool previousRpcColonistCount = Settings.RpcColonistCount;
             listing.CheckboxLabeled("Nombre de colons", ref Settings.RpcColonistCount, "Affiche le nombre de colons dans la colonie.");
             if (Settings.RpcColonistCount != previousRpcColonistCount)
+            {
+                settingsChanged = true;
+            }
+
+            listing.Gap();
+            listing.Label("Paramètres des événements :");
+            listing.GapLine();
+
+            bool previousRpcShowGameMessages = Settings.RpcShowGameMessages;
+            listing.CheckboxLabeled("Afficher les événements", ref Settings.RpcShowGameMessages, "Affiche ou masque les événements de la colonie.");
+            if (Settings.RpcShowGameMessages != previousRpcShowGameMessages)
             {
                 settingsChanged = true;
             }

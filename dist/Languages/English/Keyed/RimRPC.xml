@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-    <RPC_CategoryLabel>RimRPC</RPC_CategoryLabel>
-    <RPC_ColonyLabel>Colony name</RPC_ColonyLabel>
-    <RPC_ColonistCountLabel>Colonist count</RPC_ColonistCountLabel>
-    <RPC_BiomeLabel>Current biome</RPC_BiomeLabel>
-    <RPC_YearLabel>Current year</RPC_YearLabel>
-    <RPC_YearShortLabel>Shorten year text</RPC_YearShortLabel>
-    <RPC_QuadrumLabel>Current quadrum</RPC_QuadrumLabel>
-    <RPC_DayLabel>Current day</RPC_DayLabel>
-    <RPC_HourLabel>Hour of current day</RPC_HourLabel>
-    <RPC_TimeLabel>Game session length (Requires restart)</RPC_TimeLabel>
-    <RPC_ShowLastEvent>Show last event</RPC_ShowLastEvent>
-    <RPC_UpdateLabel>Manually update presence</RPC_UpdateLabel>
-	
-    <CustomTopCheckbox>Custom text (Top)</CustomTopCheckbox>
-    <CustomBottomCheckbox>Custom text (Bottom)</CustomBottomCheckbox>
-    <CustomTopLabel>Text</CustomTopLabel>
-    <CustomBottomLabel>Text </CustomBottomLabel>
-
-	<RPC_MainMenu>Main Menu</RPC_MainMenu>
-	<RPC_Day>Day</RPC_Day>
-	<RPC_Colonists>Colonists</RPC_Colonists>
-	<RPC_Hour>h</RPC_Hour>
-	<RPC_Years>Year</RPC_Years>
-	<RPC_ShortYears>y</RPC_ShortYears>
-	<RPC_Playing>Playing!</RPC_Playing>
+    <!-- User interface labels -->
+    <RPC_ColonistCountLabel>Colonist Count</RPC_ColonistCountLabel>
+    <RPC_BiomeLabel>Current Biome</RPC_BiomeLabel>
+    <RPC_ColonyLabel>Colony Name</RPC_ColonyLabel>
+    <RPC_YearLabel>Year</RPC_YearLabel>
+    <RPC_YearShortLabel>Short Year</RPC_YearShortLabel>
+    <RPC_QuadrumLabel>Quadrum</RPC_QuadrumLabel>
+    <RPC_DayLabel>Day</RPC_DayLabel>
+    <RPC_HourLabel>Hour</RPC_HourLabel>
+    <RPC_MainMenu>Main Menu</RPC_MainMenu>
+    <RPC_Playing>Playing</RPC_Playing>
+    
+    <!-- Customization options -->
+    <RPC_CustomTopCheckbox>Custom Text (Top)</RPC_CustomTopCheckbox>
+    <RPC_CustomBottomCheckbox>Custom Text (Bottom)</RPC_CustomBottomCheckbox>
+    <CustomTopLabel>Text (Top)</CustomTopLabel>
+    <CustomBottomLabel>Text (Bottom)</CustomBottomLabel>
+    
+    <!-- Error and success messages -->
+    <RPC_InitSuccess>Discord SDK initialized successfully.</RPC_InitSuccess>
+    <RPC_InitFailure>Failed to initialize Discord SDK: {0}</RPC_InitFailure>
+    <RPC_UpdateSuccess>Rich Presence updated successfully.</RPC_UpdateSuccess>
+    <RPC_UpdateFailure>Failed to update Rich Presence: {0}</RPC_UpdateFailure>
+    <RPC_Shutdown>Discord SDK shut down.</RPC_Shutdown>
 </LanguageData>

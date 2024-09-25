@@ -47,13 +47,22 @@ namespace RimRPC
     }
 
     [HarmonyPatch(typeof(Messages))]
-    [HarmonyPatch("Message", new Type[] { typeof(string), typeof(MessageTypeDef), typeof(bool) })]
+    [HarmonyPatch("Message", new Type[] { typeof(Message), typeof(bool) })]
     public static class Messages_Message_Patch
     {
-        public static void Postfix(string text, MessageTypeDef def, bool historical)
+        public static void Postfix(Message msg, bool historical)
         {
-            // Mettez à jour la Rich Presence ou enregistrez l'événement si nécessaire
+            if (!RWRPCMod.Settings.RpcShowGameMessages) return; // Respecter les paramètres de l'utilisateur
+
+            string text = msg.text;
             Log.Message($"RimRPC : Message reçu - {text}");
+
+            // Enregistrer l'événement et réinitialiser le timer
+            RimRPC.lastEventText = text;
+            RimRPC.lastEventTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+            // Mise à jour de la Rich Presence
+            RimRPC.UpdatePresence();
         }
     }
 }

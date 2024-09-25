@@ -4,24 +4,19 @@ using RimWorld;
 using Verse;
 using UnityEngine;
 
-
 namespace RimRPC
 {
     [StaticConstructorOnStartup]
     public class RimRPC
     {
         private const long ClientId = 1288106578825969816; // Votre application ID
-
+        public static long lastEventTime = 0;
+        public static string lastEventText = "";
+        private const long eventDuration = 60; // 1 minute en secondes
         internal static Discord discord;
         internal static long Started = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         internal static ActivityManager activityManager;
         internal static Activity activity;
-        /*
-        static RimRPC()
-        {
-            BootMeUp();
-        }
-        */
 
         public static void BootMeUp()
         {
@@ -54,9 +49,23 @@ namespace RimRPC
 
             var settings = RWRPCMod.Settings;
 
-            // Construire l'état (State) et les détails (Details) en fonction des paramètres
+            // Si l'affichage des événements est désactivé, ne pas afficher les événements
+            if (!settings.RpcShowGameMessages)
+            {
+                lastEventText = "";
+                lastEventTime = 0;
+            }
+
+            // Mise à jour de l'état en fonction des événements
             string state = GetActivityState(settings);
             string details = GetActivityDetails(settings);
+
+            // Vérification si un événement est encore en cours d'affichage
+            long currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            if (currentTime - lastEventTime < eventDuration && !string.IsNullOrEmpty(lastEventText))
+            {
+                state = lastEventText; // Maintenir l'événement actuel
+            }
 
             activity.State = state;
             activity.Details = details;
@@ -66,7 +75,7 @@ namespace RimRPC
             };
             activity.Assets = new ActivityAssets
             {
-                LargeImage = "logo", // Assurez-vous que "logo" est ajouté dans les assets de votre application Discord
+                LargeImage = "logo",
                 LargeText = "RimWorld"
             };
 
@@ -85,7 +94,6 @@ namespace RimRPC
 
         private static string GetActivityState(RwrpcSettings settings)
         {
-            // Construire le texte de l'état en fonction des paramètres
             if (settings.RpcCustomBottom)
             {
                 return settings.RpcCustomBottomText;
@@ -97,22 +105,13 @@ namespace RimRPC
                 if (settings.RpcColonistCount)
                 {
                     int colonistCount = GetColonistCount();
-                    state += $"Nombre de colons : {colonistCount}";
+                    state += "RPC_ColonistCountLabel".Translate() + ": " + colonistCount + "\n";  // Traduction
                 }
 
                 if (settings.RpcBiome)
                 {
                     string biome = GetCurrentBiome();
-                    if (!string.IsNullOrEmpty(state))
-                        state += " | ";
-                    state += $"Biome : {biome}";
-                }
-
-                // Ajoutez d'autres informations en fonction des paramètres
-
-                if (string.IsNullOrEmpty(state))
-                {
-                    state = "En jeu";
+                    state += "RPC_BiomeLabel".Translate() + ": " + biome + "\n";  // Traduction
                 }
 
                 return state;
@@ -121,7 +120,6 @@ namespace RimRPC
 
         private static string GetActivityDetails(RwrpcSettings settings)
         {
-            // Construire le texte des détails en fonction des paramètres
             if (settings.RpcCustomTop)
             {
                 return settings.RpcCustomTopText;
@@ -133,22 +131,13 @@ namespace RimRPC
                 if (settings.RpcDay || settings.RpcHour || settings.RpcQuadrum || settings.RpcYear || settings.RpcYearShort)
                 {
                     var gameTime = GetGameTimeString(settings);
-                    details += gameTime;
+                    details += gameTime + "\n";  // Retour à la ligne après le temps
                 }
 
                 if (settings.RpcColony)
                 {
                     string colonyName = GetColonyName();
-                    if (!string.IsNullOrEmpty(details))
-                        details += " | ";
-                    details += $"Colonie : {colonyName}";
-                }
-
-                // Ajoutez d'autres informations en fonction des paramètres
-
-                if (string.IsNullOrEmpty(details))
-                {
-                    details = "Dans le menu principal";
+                    details += "RPC_ColonyLabel".Translate() + ": " + colonyName + "\n";  // Traduction
                 }
 
                 return details;
@@ -195,7 +184,7 @@ namespace RimRPC
 
                     if (settings.RpcDay)
                     {
-                        builder.Append($"Jour {daysPassed}");
+                        builder.Append("RPC_DayLabel".Translate() + $": {daysPassed}");
                     }
                     if (settings.RpcQuadrum)
                     {
@@ -205,30 +194,30 @@ namespace RimRPC
                     if (settings.RpcYear)
                     {
                         if (builder.Length > 0) builder.Append(" ");
-                        builder.Append($"Année {year}");
+                        builder.Append("RPC_YearLabel".Translate() + $": {year}");
                     }
                     else if (settings.RpcYearShort)
                     {
                         if (builder.Length > 0) builder.Append(" ");
-                        builder.Append($"An {year}");
+                        builder.Append("RPC_YearShortLabel".Translate() + $": {year}");
                     }
                     if (settings.RpcHour)
                     {
                         int hour = GenLocalDate.HourOfDay(currentMap);
                         if (builder.Length > 0) builder.Append(" ");
-                        builder.Append($"Heure {hour}");
+                        builder.Append("RPC_HourLabel".Translate() + $": {hour}");
                     }
                 }
                 else
                 {
                     // Gérer le cas où le tile n'est pas valide
-                    builder.Append("En jeu");
+                    builder.Append("RPC_Playing".Translate());
                 }
             }
             else
             {
                 // Le jeu n'est pas encore complètement initialisé
-                builder.Append("Dans le menu principal");
+                builder.Append("RPC_MainMenu".Translate());
             }
 
             return builder.ToString();
@@ -242,7 +231,7 @@ namespace RimRPC
             }
             else
             {
-                return "Aucune colonie";
+                return "RPC_ColonyLabel".Translate();
             }
         }
 

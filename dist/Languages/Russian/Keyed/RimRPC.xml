@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-    <RPC_CategoryLabel>RimRPC</RPC_CategoryLabel>
-    <RPC_ColonyLabel>Отображение названия колонии</RPC_ColonyLabel>
-    <RPC_ColonistCountLabel>Отоброжение количества колонистов</RPC_ColonistCountLabel>
-	<RPC_BiomeLabel>Отображение биома</RPC_BiomeLabel>
-    <RPC_YearLabel>Отображение года</RPC_YearLabel>
-    <RPC_YearShortLabel>Сокращать отображение года</RPC_YearShortLabel>
-    <RPC_QuadrumLabel>Отображение квадрума</RPC_QuadrumLabel>
-    <RPC_DayLabel>Отображение дня</RPC_DayLabel>
-    <RPC_HourLabel>Отображение часа</RPC_HourLabel>
-    <RPC_TimeLabel>Длина игровой сессии (Требуется рестарт)</RPC_TimeLabel>
-    <RPC_ShowLastEvent>Показать последнее событие</RPC_ShowLastEvent>
-    <RPC_UpdateLabel>Принудительное обновление RPC</RPC_UpdateLabel>
-	
-    <CustomTopCheckbox>Произвольный текст (Вверх)</CustomTopCheckbox>
-    <CustomBottomCheckbox>Произвольный текст (Низ)</CustomBottomCheckbox>
-    <CustomTopLabel>Текст</CustomTopLabel>
-    <CustomBottomLabel>Текст</CustomBottomLabel>
-
-	<RPC_MainMenu>В главном меню</RPC_MainMenu>
-	<RPC_Day>День</RPC_Day>
-	<RPC_Biome>Биом</RPC_Biome>
-	<RPC_Colonists>колонистов</RPC_Colonists>
-	<RPC_Hour>ч</RPC_Hour>
-	<RPC_Years>Год</RPC_Years>
-	<RPC_ShortYears>г</RPC_ShortYears>
-	<RPC_Playing>Играю!</RPC_Playing>
+    <!-- Метки пользовательского интерфейса -->
+    <RPC_ColonistCountLabel>Количество колонистов</RPC_ColonistCountLabel>
+    <RPC_BiomeLabel>Текущий биом</RPC_BiomeLabel>
+    <RPC_ColonyLabel>Название колонии</RPC_ColonyLabel>
+    <RPC_YearLabel>Год</RPC_YearLabel>
+    <RPC_YearShortLabel>Короткий год</RPC_YearShortLabel>
+    <RPC_QuadrumLabel>Квадрум</RPC_QuadrumLabel>
+    <RPC_DayLabel>День</RPC_DayLabel>
+    <RPC_HourLabel>Час</RPC_HourLabel>
+    <RPC_MainMenu>Главное меню</RPC_MainMenu>
+    <RPC_Playing>Играет</RPC_Playing>
+    
+    <!-- Опции настройки -->
+    <RPC_CustomTopCheckbox>Настраиваемый текст (верх)</RPC_CustomTopCheckbox>
+    <RPC_CustomBottomCheckbox>Настраиваемый текст (низ)</RPC_CustomBottomCheckbox>
+    <CustomTopLabel>Текст (сверху)</CustomTopLabel>
+    <CustomBottomLabel>Текст (снизу)</CustomBottomLabel>
+    
+    <!-- Сообщения об ошибках и успехах -->
+    <RPC_InitSuccess>SDK Discord успешно инициализирован.</RPC_InitSuccess>
+    <RPC_InitFailure>Не удалось инициализировать SDK Discord: {0}</RPC_InitFailure>
+    <RPC_UpdateSuccess>Rich Presence успешно обновлено.</RPC_UpdateSuccess>
+    <RPC_UpdateFailure>Не удалось обновить Rich Presence: {0}</RPC_UpdateFailure>
+    <RPC_Shutdown>SDK Discord завершен.</RPC_Shutdown>
 </LanguageData>
