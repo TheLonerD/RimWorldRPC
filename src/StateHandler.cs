@@ -18,7 +18,7 @@ namespace RimRPC
 
         private static string GetColonyName()
         {
-            return Current.Game?.World?.factionManager?.OfPlayer?.Name ?? "Colonie sans nom";
+            return Current.Game?.World?.factionManager?.OfPlayer?.Name ?? "Colony with no name";
         }
     }
 }
