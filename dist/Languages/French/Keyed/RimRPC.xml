@@ -11,13 +11,42 @@
     <RPC_HourLabel>Heure</RPC_HourLabel>
     <RPC_MainMenu>Menu principal</RPC_MainMenu>
     <RPC_Playing>En jeu</RPC_Playing>
-    
-    <!-- Options de personnalisation -->
-    <RPC_CustomTopCheckbox>Texte personnalisé (haut)</RPC_CustomTopCheckbox>
-    <RPC_CustomBottomCheckbox>Texte personnalisé (bas)</RPC_CustomBottomCheckbox>
-    <CustomTopLabel>Texte en haut</CustomTopLabel>
-    <CustomBottomLabel>Texte en bas</CustomBottomLabel>
-    
+
+    <!-- Paramètres du mod -->
+    <RPC_ModSettingsCategory>RimRPC Mod</RPC_ModSettingsCategory>
+    <RPC_CustomTextLabel>Texte personnalisé :</RPC_CustomTextLabel>
+    <RPC_EnableCustomBottomText>Activer le texte personnalisé en bas</RPC_EnableCustomBottomText>
+    <RPC_CustomBottomTextDesc>Affiche un texte personnalisé en bas de la Rich Presence.</RPC_CustomBottomTextDesc>
+    <RPC_CustomBottomTextLabel>Texte personnalisé en bas :</RPC_CustomBottomTextLabel>
+
+    <RPC_EnableCustomTopText>Activer le texte personnalisé en haut</RPC_EnableCustomTopText>
+    <RPC_CustomTopTextDesc>Affiche un texte personnalisé en haut de la Rich Presence.</RPC_CustomTopTextDesc>
+    <RPC_CustomTopTextLabel>Texte personnalisé en haut :</RPC_CustomTopTextLabel>
+
+    <RPC_TimeInfo>Informations du temps :</RPC_TimeInfo>
+    <RPC_ShowDay>Jour</RPC_ShowDay>
+    <RPC_ShowDayDesc>Affiche le jour en jeu.</RPC_ShowDayDesc>
+    <RPC_ShowHour>Heure</RPC_ShowHour>
+    <RPC_ShowHourDesc>Affiche l'heure en jeu.</RPC_ShowHourDesc>
+    <RPC_ShowQuadrum>Quadrimestre</RPC_ShowQuadrum>
+    <RPC_ShowQuadrumDesc>Affiche le quadrimestre en jeu.</RPC_ShowQuadrumDesc>
+    <RPC_ShowYear>Année</RPC_ShowYear>
+    <RPC_ShowYearDesc>Affiche l'année en jeu.</RPC_ShowYearDesc>
+    <RPC_ShowShortYear>Année courte</RPC_ShowShortYear>
+    <RPC_ShowShortYearDesc>Affiche l'année en jeu sous forme courte.</RPC_ShowShortYearDesc>
+
+    <RPC_ColonyInfo>Informations de la colonie :</RPC_ColonyInfo>
+    <RPC_ShowBiome>Biome</RPC_ShowBiome>
+    <RPC_ShowBiomeDesc>Affiche le biome actuel de la colonie.</RPC_ShowBiomeDesc>
+    <RPC_ShowColonyName>Nom de la colonie</RPC_ShowColonyName>
+    <RPC_ShowColonyNameDesc>Affiche le nom de la colonie actuelle.</RPC_ShowColonyNameDesc>
+    <RPC_ShowColonistCount>Nombre de colons</RPC_ShowColonistCount>
+    <RPC_ShowColonistCountDesc>Affiche le nombre de colons dans la colonie.</RPC_ShowColonistCountDesc>
+
+    <RPC_EventSettings>Paramètres des événements :</RPC_EventSettings>
+    <RPC_ShowGameMessages>Afficher les événements</RPC_ShowGameMessages>
+    <RPC_ShowGameMessagesDesc>Affiche ou masque les événements de la colonie.</RPC_ShowGameMessagesDesc>
+
     <!-- Messages d'erreur et succès -->
     <RPC_InitSuccess>SDK Discord initialisé avec succès.</RPC_InitSuccess>
     <RPC_InitFailure>Échec de l'initialisation du SDK Discord : {0}</RPC_InitFailure>

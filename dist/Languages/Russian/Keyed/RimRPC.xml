@@ -1,27 +1,56 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-    <!-- Метки пользовательского интерфейса -->
+    <!-- Метки интерфейса пользователя -->
     <RPC_ColonistCountLabel>Количество колонистов</RPC_ColonistCountLabel>
     <RPC_BiomeLabel>Текущий биом</RPC_BiomeLabel>
     <RPC_ColonyLabel>Название колонии</RPC_ColonyLabel>
     <RPC_YearLabel>Год</RPC_YearLabel>
-    <RPC_YearShortLabel>Короткий год</RPC_YearShortLabel>
+    <RPC_YearShortLabel>Сокращенный год</RPC_YearShortLabel>
     <RPC_QuadrumLabel>Квадрум</RPC_QuadrumLabel>
     <RPC_DayLabel>День</RPC_DayLabel>
     <RPC_HourLabel>Час</RPC_HourLabel>
     <RPC_MainMenu>Главное меню</RPC_MainMenu>
     <RPC_Playing>Играет</RPC_Playing>
-    
-    <!-- Опции настройки -->
-    <RPC_CustomTopCheckbox>Настраиваемый текст (верх)</RPC_CustomTopCheckbox>
-    <RPC_CustomBottomCheckbox>Настраиваемый текст (низ)</RPC_CustomBottomCheckbox>
-    <CustomTopLabel>Текст (сверху)</CustomTopLabel>
-    <CustomBottomLabel>Текст (снизу)</CustomBottomLabel>
-    
-    <!-- Сообщения об ошибках и успехах -->
+
+    <!-- Настройки мода -->
+    <RPC_ModSettingsCategory>Мод RimRPC</RPC_ModSettingsCategory>
+    <RPC_CustomTextLabel>Пользовательский текст :</RPC_CustomTextLabel>
+    <RPC_EnableCustomBottomText>Включить пользовательский текст внизу</RPC_EnableCustomBottomText>
+    <RPC_CustomBottomTextDesc>Отображает пользовательский текст внизу Rich Presence.</RPC_CustomBottomTextDesc>
+    <RPC_CustomBottomTextLabel>Пользовательский текст внизу :</RPC_CustomBottomTextLabel>
+
+    <RPC_EnableCustomTopText>Включить пользовательский текст наверху</RPC_EnableCustomTopText>
+    <RPC_CustomTopTextDesc>Отображает пользовательский текст наверху Rich Presence.</RPC_CustomTopTextDesc>
+    <RPC_CustomTopTextLabel>Пользовательский текст наверху :</RPC_CustomTopTextLabel>
+
+    <RPC_TimeInfo>Информация о времени :</RPC_TimeInfo>
+    <RPC_ShowDay>День</RPC_ShowDay>
+    <RPC_ShowDayDesc>Отображает текущий день в игре.</RPC_ShowDayDesc>
+    <RPC_ShowHour>Час</RPC_ShowHour>
+    <RPC_ShowHourDesc>Отображает текущий час в игре.</RPC_ShowHourDesc>
+    <RPC_ShowQuadrum>Квадрум</RPC_ShowQuadrum>
+    <RPC_ShowQuadrumDesc>Отображает текущий квадрум в игре.</RPC_ShowQuadrumDesc>
+    <RPC_ShowYear>Год</RPC_ShowYear>
+    <RPC_ShowYearDesc>Отображает текущий год в игре.</RPC_ShowYearDesc>
+    <RPC_ShowShortYear>Короткий год</RPC_ShowShortYear>
+    <RPC_ShowShortYearDesc>Отображает год в сокращенном формате.</RPC_ShowShortYearDesc>
+
+    <RPC_ColonyInfo>Информация о колонии :</RPC_ColonyInfo>
+    <RPC_ShowBiome>Биом</RPC_ShowBiome>
+    <RPC_ShowBiomeDesc>Отображает текущий биом колонии.</RPC_ShowBiomeDesc>
+    <RPC_ShowColonyName>Название колонии</RPC_ShowColonyName>
+    <RPC_ShowColonyNameDesc>Отображает название текущей колонии.</RPC_ShowColonyNameDesc>
+    <RPC_ShowColonistCount>Количество колонистов</RPC_ShowColonistCount>
+    <RPC_ShowColonistCountDesc>Отображает количество колонистов в колонии.</RPC_ShowColonistCountDesc>
+
+    <RPC_EventSettings>Настройки событий :</RPC_EventSettings>
+    <RPC_ShowGameMessages>Отображать события</RPC_ShowGameMessages>
+    <RPC_ShowGameMessagesDesc>Отображать или скрывать события колонии.</RPC_ShowGameMessagesDesc>
+
+    <!-- Сообщения об ошибках и успехе -->
     <RPC_InitSuccess>SDK Discord успешно инициализирован.</RPC_InitSuccess>
-    <RPC_InitFailure>Не удалось инициализировать SDK Discord: {0}</RPC_InitFailure>
+    <RPC_InitFailure>Ошибка инициализации SDK Discord: {0}</RPC_InitFailure>
     <RPC_UpdateSuccess>Rich Presence успешно обновлено.</RPC_UpdateSuccess>
-    <RPC_UpdateFailure>Не удалось обновить Rich Presence: {0}</RPC_UpdateFailure>
-    <RPC_Shutdown>SDK Discord завершен.</RPC_Shutdown>
+    <RPC_UpdateFailure>Ошибка обновления Rich Presence: {0}</RPC_UpdateFailure>
+    <RPC_Shutdown>SDK Discord завершил работу.</RPC_Shutdown>
 </LanguageData>

@@ -50,23 +50,21 @@ namespace RimRPC
             ModDirectory = content.RootDir;
         }
 
-        public override string SettingsCategory() => "RimRPC Mod";
+        public override string SettingsCategory() => "RPC_ModSettingsCategory".Translate();
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
             var listing = new Listing_Standard();
             listing.Begin(inRect);
 
-            // Variable pour détecter les changements
             bool settingsChanged = false;
 
             listing.Gap();
-            listing.Label("Texte personnalisé :");
+            listing.Label("RPC_CustomTextLabel".Translate());
             listing.GapLine();
 
-            // Pour RpcCustomBottom
             bool previousRpcCustomBottom = Settings.RpcCustomBottom;
-            listing.CheckboxLabeled("Activer le texte personnalisé en bas", ref Settings.RpcCustomBottom, "Affiche un texte personnalisé en bas de la Rich Presence.");
+            listing.CheckboxLabeled("RPC_EnableCustomBottomText".Translate(), ref Settings.RpcCustomBottom, "RPC_CustomBottomTextDesc".Translate());
             if (Settings.RpcCustomBottom != previousRpcCustomBottom)
             {
                 settingsChanged = true;
@@ -75,7 +73,7 @@ namespace RimRPC
             if (Settings.RpcCustomBottom)
             {
                 string previousRpcCustomBottomText = Settings.RpcCustomBottomText;
-                listing.Label("Texte personnalisé en bas :");
+                listing.Label("RPC_CustomBottomTextLabel".Translate());
                 Settings.RpcCustomBottomText = listing.TextEntry(Settings.RpcCustomBottomText);
                 if (Settings.RpcCustomBottomText != previousRpcCustomBottomText)
                 {
@@ -83,9 +81,8 @@ namespace RimRPC
                 }
             }
 
-            // Pour RpcCustomTop
             bool previousRpcCustomTop = Settings.RpcCustomTop;
-            listing.CheckboxLabeled("Activer le texte personnalisé en haut", ref Settings.RpcCustomTop, "Affiche un texte personnalisé en haut de la Rich Presence.");
+            listing.CheckboxLabeled("RPC_EnableCustomTopText".Translate(), ref Settings.RpcCustomTop, "RPC_CustomTopTextDesc".Translate());
             if (Settings.RpcCustomTop != previousRpcCustomTop)
             {
                 settingsChanged = true;
@@ -94,7 +91,7 @@ namespace RimRPC
             if (Settings.RpcCustomTop)
             {
                 string previousRpcCustomTopText = Settings.RpcCustomTopText;
-                listing.Label("Texte personnalisé en haut :");
+                listing.Label("RPC_CustomTopTextLabel".Translate());
                 Settings.RpcCustomTopText = listing.TextEntry(Settings.RpcCustomTopText);
                 if (Settings.RpcCustomTopText != previousRpcCustomTopText)
                 {
@@ -102,78 +99,76 @@ namespace RimRPC
                 }
             }
 
-            // Groupe pour les informations du temps en fessant pareil que RpcCustomBottom mais en les groupant
             listing.Gap();
-            listing.Label("Informations du temps :");
+            listing.Label("RPC_TimeInfo".Translate());
             listing.GapLine();
 
             bool previousRpcDay = Settings.RpcDay;
-            listing.CheckboxLabeled("Jour", ref Settings.RpcDay, "Affiche le jour en jeu.");
+            listing.CheckboxLabeled("RPC_ShowDay".Translate(), ref Settings.RpcDay, "RPC_ShowDayDesc".Translate());
             if (Settings.RpcDay != previousRpcDay)
             {
                 settingsChanged = true;
             }
-            
+
             bool previousRpcHour = Settings.RpcHour;
-            listing.CheckboxLabeled("Heure", ref Settings.RpcHour, "Affiche l'heure en jeu.");
+            listing.CheckboxLabeled("RPC_ShowHour".Translate(), ref Settings.RpcHour, "RPC_ShowHourDesc".Translate());
             if (Settings.RpcHour != previousRpcHour)
             {
                 settingsChanged = true;
             }
 
             bool previousRpcQuadrum = Settings.RpcQuadrum;
-            listing.CheckboxLabeled("Quadrimestre", ref Settings.RpcQuadrum, "Affiche le quadrimestre en jeu.");
+            listing.CheckboxLabeled("RPC_ShowQuadrum".Translate(), ref Settings.RpcQuadrum, "RPC_ShowQuadrumDesc".Translate());
             if (Settings.RpcQuadrum != previousRpcQuadrum)
             {
                 settingsChanged = true;
             }
 
             bool previousRpcYear = Settings.RpcYear;
-            listing.CheckboxLabeled("Année", ref Settings.RpcYear, "Affiche l'année en jeu.");
+            listing.CheckboxLabeled("RPC_ShowYear".Translate(), ref Settings.RpcYear, "RPC_ShowYearDesc".Translate());
             if (Settings.RpcYear != previousRpcYear)
             {
                 settingsChanged = true;
             }
 
             bool previousRpcYearShort = Settings.RpcYearShort;
-            listing.CheckboxLabeled("Année courte", ref Settings.RpcYearShort, "Affiche l'année en jeu sous forme courte.");
+            listing.CheckboxLabeled("RPC_ShowShortYear".Translate(), ref Settings.RpcYearShort, "RPC_ShowShortYearDesc".Translate());
             if (Settings.RpcYearShort != previousRpcYearShort)
             {
                 settingsChanged = true;
             }
 
-            // Groupe pour les informations de la colonie en fessant pareil que RpcCustomBottom mais en les groupant
             listing.Gap();
-            listing.Label("Informations de la colonie :");
+            listing.Label("RPC_ColonyInfo".Translate());
             listing.GapLine();
 
             bool previousRpcBiome = Settings.RpcBiome;
-            listing.CheckboxLabeled("Biome", ref Settings.RpcBiome, "Affiche le biome actuel de la colonie.");
+            listing.CheckboxLabeled("RPC_ShowBiome".Translate(), ref Settings.RpcBiome, "RPC_ShowBiomeDesc".Translate());
             if (Settings.RpcBiome != previousRpcBiome)
             {
                 settingsChanged = true;
             }
 
             bool previousRpcColony = Settings.RpcColony;
-            listing.CheckboxLabeled("Nom de la colonie", ref Settings.RpcColony, "Affiche le nom de la colonie actuelle.");
+            listing.CheckboxLabeled("RPC_ShowColonyName".Translate(), ref Settings.RpcColony, "RPC_ShowColonyNameDesc".Translate());
             if (Settings.RpcColony != previousRpcColony)
             {
                 settingsChanged = true;
             }
 
             bool previousRpcColonistCount = Settings.RpcColonistCount;
-            listing.CheckboxLabeled("Nombre de colons", ref Settings.RpcColonistCount, "Affiche le nombre de colons dans la colonie.");
+            listing.CheckboxLabeled("RPC_ShowColonistCount".Translate(), ref Settings.RpcColonistCount, "RPC_ShowColonistCountDesc".Translate());
             if (Settings.RpcColonistCount != previousRpcColonistCount)
             {
                 settingsChanged = true;
             }
 
             listing.Gap();
-            listing.Label("Paramètres des événements :");
+            listing.Label("RPC_EventSettings".Translate());
             listing.GapLine();
 
             bool previousRpcShowGameMessages = Settings.RpcShowGameMessages;
-            listing.CheckboxLabeled("Afficher les événements", ref Settings.RpcShowGameMessages, "Affiche ou masque les événements de la colonie.");
+            listing.CheckboxLabeled("RPC_ShowGameMessages".Translate(), ref Settings.RpcShowGameMessages, "RPC_ShowGameMessagesDesc".Translate());
             if (Settings.RpcShowGameMessages != previousRpcShowGameMessages)
             {
                 settingsChanged = true;
@@ -183,10 +178,7 @@ namespace RimRPC
 
             if (settingsChanged)
             {
-                // Sauvegarder les paramètres
                 Settings.Write();
-
-                // Vérifier si le jeu est en cours avant de mettre à jour la Rich Presence
                 if (Current.ProgramState == ProgramState.Playing)
                 {
                     RimRPC.UpdatePresence();
