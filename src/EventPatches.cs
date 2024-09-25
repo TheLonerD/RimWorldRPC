@@ -16,15 +16,6 @@ namespace RimRPC
             
             try
             {
-                var methods = AccessTools.GetDeclaredMethods(typeof(LetterStack))
-                    .Where(m => m.Name == "ReceiveLetter")
-                    .ToList();
-
-                foreach (var method in methods)
-                {
-                    Log.Message($"RimRPC : Méthode ReceiveLetter trouvée : {method.ToString()}");
-                }
-
                 // Appliquer les patches
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
                 Log.Message("RimRPC : Tous les patches ont été appliqués avec succès.");
@@ -106,7 +97,7 @@ namespace RimRPC
         {
             if (!RWRPCMod.Settings.RpcShowGameMessages) return;
 
-            string text = $"Lettre : {let.Label}";
+            string text = $"{let.Label}";
             Log.Message($"RimRPC : Lettre reçue - {text}");
             RimRPC.lastEventText = text;
             RimRPC.lastEventTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
