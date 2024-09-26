@@ -6,7 +6,7 @@ namespace RimRPC
     {
         public DiscordGameComponent(Game game) : base()
         {
-            // Votre code d'initialisation si nécessaire
+            
         }
 
         public override void GameComponentTick()
@@ -25,21 +25,21 @@ namespace RimRPC
         private bool initialized = false;
         public RimRPCGameComponent(Game game) : base()
         {
-            // Votre code d'initialisation si nécessaire
+            
         }
 
         public override void GameComponentTick()
         {
             base.GameComponentTick();
 
-            // Initialisation retardée jusqu'à ce que le jeu soit prêt
+            // Initialisation delayed until the game is ready
             if (!initialized && Current.Game != null && Find.TickManager != null)
             {
                 RimRPC.BootMeUp();
                 initialized = true;
             }
 
-            // Appeler Update() toutes les 60 ticks (1 seconde)
+            // Call Update() every 60 ticks (1 second)
             if (initialized && Find.TickManager.TicksGame % 60 == 0)
             {
                 RimRPC.Update();
