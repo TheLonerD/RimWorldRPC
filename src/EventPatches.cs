@@ -25,7 +25,7 @@ namespace RimRPC
                 Log.Error($"RimRPC : Échec de l'application des patches. Exception : {ex}");
             }
 
-            // Patch pour le retour au menu principal
+            // Patch to return to the main menu
             try
             {
                 MethodInfo targetMethod = AccessTools.Method(typeof(GenScene), "GoToMainMenu");
@@ -48,7 +48,7 @@ namespace RimRPC
         }
     }
 
-    // Patch pour Messages.Message(string, MessageTypeDef, bool)
+    // Patch for Messages.Message(string, MessageTypeDef, bool)
     [HarmonyPatch(typeof(Messages))]
     [HarmonyPatch("Message", new Type[] { typeof(string), typeof(MessageTypeDef), typeof(bool) })]
     public static class Messages_StringMessage_Patch
@@ -64,7 +64,7 @@ namespace RimRPC
         }
     }
 
-    // Patch pour Messages.Message(Message, bool)
+    // Patch for Messages.Message(Message, bool)
     [HarmonyPatch(typeof(Messages))]
     [HarmonyPatch("Message", new Type[] { typeof(Message), typeof(bool) })]
     public static class Messages_Message_Patch

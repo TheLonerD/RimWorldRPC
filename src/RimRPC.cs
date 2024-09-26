@@ -9,10 +9,10 @@ namespace RimRPC
     [StaticConstructorOnStartup]
     public class RimRPC
     {
-        private const long ClientId = 1288106578825969816; // Votre application ID
+        private const long ClientId = 1288106578825969816; // Your application ID, this one by default
         public static long lastEventTime = 0;
         public static string lastEventText = "";
-        private const long eventDuration = 60; // 1 minute en secondes
+        private const long eventDuration = 60; // 1 minute in seconds
         internal static Discord discord;
         internal static long Started = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         internal static ActivityManager activityManager;
@@ -49,22 +49,22 @@ namespace RimRPC
 
             var settings = RWRPCMod.Settings;
 
-            // Si l'affichage des événements est désactivé, ne pas afficher les événements
+            // If event display is disabled, do not display events
             if (!settings.RpcShowGameMessages)
             {
                 lastEventText = "";
                 lastEventTime = 0;
             }
 
-            // Mise à jour de l'état en fonction des événements
+            // Status updated according to events
             string state = GetActivityState(settings);
             string details = GetActivityDetails(settings);
 
-            // Vérification si un événement est encore en cours d'affichage
+            // Check whether an event is still being displayed
             long currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             if (currentTime - lastEventTime < eventDuration && !string.IsNullOrEmpty(lastEventText))
             {
-                state = lastEventText; // Maintenir l'événement actuel
+                state = lastEventText; // Maintain the current event
             }
 
             activity.State = state;
@@ -131,7 +131,7 @@ namespace RimRPC
                 if (settings.RpcDay || settings.RpcHour || settings.RpcQuadrum || settings.RpcYear || settings.RpcYearShort)
                 {
                     var gameTime = GetGameTimeString(settings);
-                    details += gameTime + "\n";  // Retour à la ligne après le temps
+                    details += gameTime + "\n";  // Back to the line after the time
                 }
 
                 if (settings.RpcColony)
@@ -144,7 +144,7 @@ namespace RimRPC
             }
         }
 
-        // Méthodes pour récupérer les informations du jeu
+        // Methods for retrieving game information
         private static int GetColonistCount()
         {
             return PawnsFinder.AllMaps_FreeColonists.Count;
@@ -172,7 +172,7 @@ namespace RimRPC
             {
                 var tile = currentMap.Tile;
 
-                // Vérifier si le tile est valide
+                // Check that the tile is valid
                 if (tile >= 0 && tile < worldGrid.TilesCount)
                 {
                     var longitude = worldGrid.LongLatOf(tile).x;
@@ -210,13 +210,13 @@ namespace RimRPC
                 }
                 else
                 {
-                    // Gérer le cas où le tile n'est pas valide
+                    // Handle the case where the tile is invalid
                     builder.Append("RPC_Playing".Translate());
                 }
             }
             else
             {
-                // Le jeu n'est pas encore complètement initialisé
+                // The game has not yet been fully initialised
                 builder.Append("RPC_MainMenu".Translate());
             }
 
@@ -250,7 +250,7 @@ namespace RimRPC
             UpdatePresence();
         }
 
-        // Méthode de mise à jour régulière
+        // Regular update method
         public static void Update()
         {
             if (discord != null)

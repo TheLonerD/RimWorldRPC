@@ -64,7 +64,7 @@ namespace RimRPC
             else if (Application.platform == RuntimePlatform.OSXPlayer)
             {
                 libName = "discord_game_sdk.dylib";
-                // Pour macOS sur Apple Silicon, l'architecture est "aarch64"
+                // For macOS on Apple Silicon, the architecture is ‘aarch64’.
                 if (IsRunningOnAppleSilicon())
                 {
                     architecture = "aarch64";
@@ -85,7 +85,7 @@ namespace RimRPC
 
         private static string GetTargetLibraryPath()
         {
-            string dataPath = Application.dataPath; // Chemin vers RimWorldWin64_Data
+            string dataPath = Application.dataPath; // Path to RimWorldWin64_Data
             string pluginsPath = Path.Combine(dataPath, "Plugins");
             string libName = "";
 
@@ -107,7 +107,7 @@ namespace RimRPC
                 return null;
             }
 
-            // S'assurer que le dossier Plugins existe
+            // Make sure the Plugins folder exists
             if (!Directory.Exists(pluginsPath))
             {
                 Directory.CreateDirectory(pluginsPath);
