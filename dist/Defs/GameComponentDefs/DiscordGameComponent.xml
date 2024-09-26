@@ -1,0 +1,6 @@
+<Defs>
+  <GameComponentDef>
+    <defName>DiscordGameComponent</defName>
+    <componentClass>RimRPC.DiscordGameComponent</componentClass>
+  </GameComponentDef>
+</Defs>

@@ -1,112 +1,262 @@
-﻿using HarmonyLib;
-using System;
-using System.Reflection;
+﻿using System;
+using DiscordGameSDKWrapper;
+using RimWorld;
 using Verse;
+using UnityEngine;
 
 namespace RimRPC
 {
-    public class Mod : Verse.Mod
-    {
-        public Mod(ModContentPack content) : base(content)
-        {
-            Log.Message("RimRPC: Initializing mod...");
-            var harmony = new Harmony("weilbyte.rimworld.rimrpc");
-
-            MethodInfo targetmethod = AccessTools.Method(typeof(GenScene), "GoToMainMenu");
-            HarmonyMethod postfixmethod = new HarmonyMethod(typeof(RimRPC).GetMethod("GoToMainMenu_Postfix"));
-
-            try
-            {
-                harmony.Patch(targetmethod, null, postfixmethod);
-                Log.Message("RimRPC: Main menu patch applied successfully.");
-            }
-            catch (Exception ex)
-            {
-                Log.Error("RimRPC: Failed to apply main menu patch. Exception: " + ex);
-            }
-
-            RimRPC.BootMeUp();
-        }
-    }
-
+    [StaticConstructorOnStartup]
     public class RimRPC
     {
-        internal static DiscordRPC.RichPresence Presence;
-        internal static string Colony;
-        internal static int onDay;
-        internal static long Started = (DateTime.UtcNow.Ticks - new DateTime(1970, 1, 1).Ticks) / TimeSpan.TicksPerSecond;
-        internal static string LastEvent; // Nouvelle variable
+        private const long ClientId = 1288106578825969816; // Votre application ID
+        public static long lastEventTime = 0;
+        public static string lastEventText = "";
+        private const long eventDuration = 60; // 1 minute en secondes
+        internal static Discord discord;
+        internal static long Started = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        internal static ActivityManager activityManager;
+        internal static Activity activity;
 
         public static void BootMeUp()
         {
-            Log.Message("RimRPC: Initializing Discord RPC...");
-            DiscordRPC.EventHandlers eventHandlers = default;
-            eventHandlers.ReadyCallback = (DiscordRPC.ReadyCallback)Delegate.Combine(eventHandlers.ReadyCallback, new DiscordRPC.ReadyCallback(ReadyCallback));
-            eventHandlers.DisconnectedCallback = (DiscordRPC.DisconnectedCallback)Delegate.Combine(eventHandlers.DisconnectedCallback, new DiscordRPC.DisconnectedCallback(DisconnectedCallback));
-            eventHandlers.ErrorCallback = (DiscordRPC.ErrorCallback)Delegate.Combine(eventHandlers.ErrorCallback, new DiscordRPC.ErrorCallback(ErrorCallback));
-            eventHandlers.JoinCallback = (DiscordRPC.JoinCallback)Delegate.Combine(eventHandlers.JoinCallback, new DiscordRPC.JoinCallback(JoinCallback));
-            eventHandlers.SpectateCallback = (DiscordRPC.SpectateCallback)Delegate.Combine(eventHandlers.SpectateCallback, new DiscordRPC.SpectateCallback(SpectateCallback));
-            eventHandlers.RequestCallback = (DiscordRPC.RequestCallback)Delegate.Combine(eventHandlers.RequestCallback, new DiscordRPC.RequestCallback(RequestCallback));
-
-            DiscordRPC.Initialize("428272711702282252", ref eventHandlers, true, "0612");
-
-            Presence = new DiscordRPC.RichPresence
-            {
-                LargeImageKey = "logo",
-                State = "RPC_MainMenu".Translate()
-            };
-
-            DiscordRPC.UpdatePresence(ref Presence);
-            ReadyCallback();
-            Log.Message("RimRPC: Discord RPC initialized.");
+            Initialize();
+            UpdatePresence();
         }
 
-        public static void UpdateLastEvent(string eventDescription)
+        public static void Initialize()
         {
-            Log.Message($"RimRPC: Attempting to update last event with: {eventDescription}");
-            if (RWRPCMod.Settings.ShowLastEvent)
+            try
             {
-                LastEvent = eventDescription;
-                Presence.Details = LastEvent;
-                Log.Message($"RimRPC: Updating last event: {LastEvent}");
-                DiscordRPC.UpdatePresence(ref Presence);
+                discord = new Discord(ClientId, (UInt64)CreateFlags.NoRequireDiscord);
+                activityManager = discord.GetActivityManager();
+                activity = new Activity();
+                Log.Message("RimRPC : Discord Game SDK initialisé avec le client ID par défaut.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"RimRPC : Échec de l'initialisation du Discord Game SDK : {ex.Message}");
+            }
+        }
+
+        public static void UpdatePresence()
+        {
+            if (discord == null)
+            {
+                Log.Error("RimRPC : Discord SDK non initialisé.");
+                return;
+            }
+
+            var settings = RWRPCMod.Settings;
+
+            // Si l'affichage des événements est désactivé, ne pas afficher les événements
+            if (!settings.RpcShowGameMessages)
+            {
+                lastEventText = "";
+                lastEventTime = 0;
+            }
+
+            // Mise à jour de l'état en fonction des événements
+            string state = GetActivityState(settings);
+            string details = GetActivityDetails(settings);
+
+            // Vérification si un événement est encore en cours d'affichage
+            long currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            if (currentTime - lastEventTime < eventDuration && !string.IsNullOrEmpty(lastEventText))
+            {
+                state = lastEventText; // Maintenir l'événement actuel
+            }
+
+            activity.State = state;
+            activity.Details = details;
+            activity.Timestamps = new ActivityTimestamps
+            {
+                Start = Started
+            };
+            activity.Assets = new ActivityAssets
+            {
+                LargeImage = "logo",
+                LargeText = "RimWorld"
+            };
+
+            activityManager.UpdateActivity(activity, (result) =>
+            {
+                if (result == Result.Ok)
+                {
+                    Log.Message("RimRPC : Rich Presence mise à jour avec succès.");
+                }
+                else
+                {
+                    Log.Error($"RimRPC : Échec de la mise à jour de la Rich Presence : {result}");
+                }
+            });
+        }
+
+        private static string GetActivityState(RwrpcSettings settings)
+        {
+            if (settings.RpcCustomBottom)
+            {
+                return settings.RpcCustomBottomText;
             }
             else
             {
-                Log.Message("RimRPC: ShowLastEvent is disabled.");
+                string state = "";
+
+                if (settings.RpcColonistCount)
+                {
+                    int colonistCount = GetColonistCount();
+                    state += "RPC_ColonistCountLabel".Translate() + ": " + colonistCount + "\n";  // Traduction
+                }
+
+                if (settings.RpcBiome)
+                {
+                    string biome = GetCurrentBiome();
+                    state += "RPC_BiomeLabel".Translate() + ": " + biome + "\n";  // Traduction
+                }
+
+                return state;
             }
         }
 
-        private static void RequestCallback(DiscordRPC.JoinRequest request)
+        private static string GetActivityDetails(RwrpcSettings settings)
         {
+            if (settings.RpcCustomTop)
+            {
+                return settings.RpcCustomTopText;
+            }
+            else
+            {
+                string details = "";
+
+                if (settings.RpcDay || settings.RpcHour || settings.RpcQuadrum || settings.RpcYear || settings.RpcYearShort)
+                {
+                    var gameTime = GetGameTimeString(settings);
+                    details += gameTime + "\n";  // Retour à la ligne après le temps
+                }
+
+                if (settings.RpcColony)
+                {
+                    string colonyName = GetColonyName();
+                    details += "RPC_ColonyLabel".Translate() + ": " + colonyName + "\n";  // Traduction
+                }
+
+                return details;
+            }
         }
 
-        private static void SpectateCallback(string secret)
+        // Méthodes pour récupérer les informations du jeu
+        private static int GetColonistCount()
         {
+            return PawnsFinder.AllMaps_FreeColonists.Count;
         }
 
-        private static void JoinCallback(string secret)
+        private static string GetCurrentBiome()
         {
+            var map = Find.CurrentMap;
+            if (map != null && map.Biome != null)
+            {
+                return map.Biome.LabelCap;
+            }
+            return "N/A";
         }
 
-        private static void ErrorCallback(int errorCode, string message)
+        private static string GetGameTimeString(RwrpcSettings settings)
         {
-            Log.Message($"RichPresence :: ErrorCallback: {errorCode} {message}");
+            var builder = new System.Text.StringBuilder();
+
+            var tickManager = Find.TickManager;
+            var currentMap = Find.CurrentMap;
+            var worldGrid = Find.WorldGrid;
+
+            if (tickManager != null && currentMap != null && worldGrid != null)
+            {
+                var tile = currentMap.Tile;
+
+                // Vérifier si le tile est valide
+                if (tile >= 0 && tile < worldGrid.TilesCount)
+                {
+                    var longitude = worldGrid.LongLatOf(tile).x;
+                    var ticksAbs = tickManager.TicksAbs;
+
+                    var daysPassed = GenDate.DaysPassed;
+                    var quadrum = GenDate.Quadrum(ticksAbs, longitude);
+                    var year = GenDate.Year(ticksAbs, longitude);
+
+                    if (settings.RpcDay)
+                    {
+                        builder.Append("RPC_DayLabel".Translate() + $": {daysPassed}");
+                    }
+                    if (settings.RpcQuadrum)
+                    {
+                        if (builder.Length > 0) builder.Append(" ");
+                        builder.Append($"{quadrum}");
+                    }
+                    if (settings.RpcYear)
+                    {
+                        if (builder.Length > 0) builder.Append(" ");
+                        builder.Append("RPC_YearLabel".Translate() + $": {year}");
+                    }
+                    else if (settings.RpcYearShort)
+                    {
+                        if (builder.Length > 0) builder.Append(" ");
+                        builder.Append("RPC_YearShortLabel".Translate() + $": {year}");
+                    }
+                    if (settings.RpcHour)
+                    {
+                        int hour = GenLocalDate.HourOfDay(currentMap);
+                        if (builder.Length > 0) builder.Append(" ");
+                        builder.Append("RPC_HourLabel".Translate() + $": {hour}");
+                    }
+                }
+                else
+                {
+                    // Gérer le cas où le tile n'est pas valide
+                    builder.Append("RPC_Playing".Translate());
+                }
+            }
+            else
+            {
+                // Le jeu n'est pas encore complètement initialisé
+                builder.Append("RPC_MainMenu".Translate());
+            }
+
+            return builder.ToString();
         }
 
-        private static void DisconnectedCallback(int errorCode, string message)
+        private static string GetColonyName()
         {
-            Log.Message($"RichPresence :: DisconnectedCallback: {errorCode} {message}");
+            if (Find.World != null && Find.World.info != null)
+            {
+                return Find.World.info.name;
+            }
+            else
+            {
+                return "RPC_ColonyLabel".Translate();
+            }
         }
 
-        private static void ReadyCallback()
+        public static void Shutdown()
         {
-            Log.Message("RichPresence :: Running");
+            if (discord != null)
+            {
+                discord.Dispose();
+                discord = null;
+                Log.Message("RimRPC : Discord SDK fermé.");
+            }
         }
 
         public static void GoToMainMenu_Postfix()
         {
-            StateHandler.MenuState();
+            UpdatePresence();
+        }
+
+        // Méthode de mise à jour régulière
+        public static void Update()
+        {
+            if (discord != null)
+            {
+                discord.RunCallbacks();
+            }
         }
     }
 }

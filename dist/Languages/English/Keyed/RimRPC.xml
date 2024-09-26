@@ -1,28 +1,56 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-    <RPC_CategoryLabel>RimRPC</RPC_CategoryLabel>
-    <RPC_ColonyLabel>Colony name</RPC_ColonyLabel>
-    <RPC_ColonistCountLabel>Colonist count</RPC_ColonistCountLabel>
-    <RPC_BiomeLabel>Current biome</RPC_BiomeLabel>
-    <RPC_YearLabel>Current year</RPC_YearLabel>
-    <RPC_YearShortLabel>Shorten year text</RPC_YearShortLabel>
-    <RPC_QuadrumLabel>Current quadrum</RPC_QuadrumLabel>
-    <RPC_DayLabel>Current day</RPC_DayLabel>
-    <RPC_HourLabel>Hour of current day</RPC_HourLabel>
-    <RPC_TimeLabel>Game session length (Requires restart)</RPC_TimeLabel>
-    <RPC_ShowLastEvent>Show last event</RPC_ShowLastEvent>
-    <RPC_UpdateLabel>Manually update presence</RPC_UpdateLabel>
-	
-    <CustomTopCheckbox>Custom text (Top)</CustomTopCheckbox>
-    <CustomBottomCheckbox>Custom text (Bottom)</CustomBottomCheckbox>
-    <CustomTopLabel>Text</CustomTopLabel>
-    <CustomBottomLabel>Text </CustomBottomLabel>
+    <!-- UI Labels -->
+    <RPC_ColonistCountLabel>Colonist Count</RPC_ColonistCountLabel>
+    <RPC_BiomeLabel>Current Biome</RPC_BiomeLabel>
+    <RPC_ColonyLabel>Colony Name</RPC_ColonyLabel>
+    <RPC_YearLabel>Year</RPC_YearLabel>
+    <RPC_YearShortLabel>Short Year</RPC_YearShortLabel>
+    <RPC_QuadrumLabel>Quadrum</RPC_QuadrumLabel>
+    <RPC_DayLabel>Day</RPC_DayLabel>
+    <RPC_HourLabel>Hour</RPC_HourLabel>
+    <RPC_MainMenu>Main Menu</RPC_MainMenu>
+    <RPC_Playing>Playing</RPC_Playing>
 
-	<RPC_MainMenu>Main Menu</RPC_MainMenu>
-	<RPC_Day>Day</RPC_Day>
-	<RPC_Colonists>Colonists</RPC_Colonists>
-	<RPC_Hour>h</RPC_Hour>
-	<RPC_Years>Year</RPC_Years>
-	<RPC_ShortYears>y</RPC_ShortYears>
-	<RPC_Playing>Playing!</RPC_Playing>
+    <!-- Mod Settings -->
+    <RPC_ModSettingsCategory>RimRPC Mod</RPC_ModSettingsCategory>
+    <RPC_CustomTextLabel>Custom Text :</RPC_CustomTextLabel>
+    <RPC_EnableCustomBottomText>Enable custom bottom text</RPC_EnableCustomBottomText>
+    <RPC_CustomBottomTextDesc>Displays a custom text at the bottom of the Rich Presence.</RPC_CustomBottomTextDesc>
+    <RPC_CustomBottomTextLabel>Custom bottom text :</RPC_CustomBottomTextLabel>
+
+    <RPC_EnableCustomTopText>Enable custom top text</RPC_EnableCustomTopText>
+    <RPC_CustomTopTextDesc>Displays a custom text at the top of the Rich Presence.</RPC_CustomTopTextDesc>
+    <RPC_CustomTopTextLabel>Custom top text :</RPC_CustomTopTextLabel>
+
+    <RPC_TimeInfo>Time Information :</RPC_TimeInfo>
+    <RPC_ShowDay>Day</RPC_ShowDay>
+    <RPC_ShowDayDesc>Displays the current day in the game.</RPC_ShowDayDesc>
+    <RPC_ShowHour>Hour</RPC_ShowHour>
+    <RPC_ShowHourDesc>Displays the current hour in the game.</RPC_ShowHourDesc>
+    <RPC_ShowQuadrum>Quadrum</RPC_ShowQuadrum>
+    <RPC_ShowQuadrumDesc>Displays the current quadrum in the game.</RPC_ShowQuadrumDesc>
+    <RPC_ShowYear>Year</RPC_ShowYear>
+    <RPC_ShowYearDesc>Displays the current year in the game.</RPC_ShowYearDesc>
+    <RPC_ShowShortYear>Short Year</RPC_ShowShortYear>
+    <RPC_ShowShortYearDesc>Displays the year in a short format.</RPC_ShowShortYearDesc>
+
+    <RPC_ColonyInfo>Colony Information :</RPC_ColonyInfo>
+    <RPC_ShowBiome>Biome</RPC_ShowBiome>
+    <RPC_ShowBiomeDesc>Displays the current colony biome.</RPC_ShowBiomeDesc>
+    <RPC_ShowColonyName>Colony Name</RPC_ShowColonyName>
+    <RPC_ShowColonyNameDesc>Displays the name of the current colony.</RPC_ShowColonyNameDesc>
+    <RPC_ShowColonistCount>Colonist Count</RPC_ShowColonistCount>
+    <RPC_ShowColonistCountDesc>Displays the number of colonists in the colony.</RPC_ShowColonistCountDesc>
+
+    <RPC_EventSettings>Event Settings :</RPC_EventSettings>
+    <RPC_ShowGameMessages>Show Events</RPC_ShowGameMessages>
+    <RPC_ShowGameMessagesDesc>Displays or hides colony events.</RPC_ShowGameMessagesDesc>
+
+    <!-- Error and Success Messages -->
+    <RPC_InitSuccess>Discord SDK initialized successfully.</RPC_InitSuccess>
+    <RPC_InitFailure>Failed to initialize Discord SDK: {0}</RPC_InitFailure>
+    <RPC_UpdateSuccess>Rich Presence updated successfully.</RPC_UpdateSuccess>
+    <RPC_UpdateFailure>Failed to update Rich Presence: {0}</RPC_UpdateFailure>
+    <RPC_Shutdown>Discord SDK shut down.</RPC_Shutdown>
 </LanguageData>

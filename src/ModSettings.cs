@@ -1,115 +1,189 @@
 ﻿using UnityEngine;
 using Verse;
-using System.Linq;
 
 namespace RimRPC
 {
     public class RwrpcSettings : ModSettings
     {
-        #region variables
-        public bool RpcColony = true;
-        public bool RpcColonistCount;
-        public bool RpcYear;
-        public bool RpcYearShort = true;
-        public bool RpcQuadrum = true;
-        public bool RpcDay = true;
-        public bool RpcHour = true;
-        public bool RpcTime = true;
-        public bool RpcBiome;
-        public bool RpcCustomTop;
-        public bool RpcCustomBottom;
-        public bool ShowLastEvent; // Nouvelle option
-        public string RpcCustomTopText = "Example";
-        public string RpcCustomBottomText = "Example";
-        #endregion
+        public bool RpcCustomBottom = false;
+        public string RpcCustomBottomText = "";
+        public bool RpcCustomTop = false;
+        public string RpcCustomTopText = "";
+        public bool RpcDay = false;
+        public bool RpcHour = false;
+        public bool RpcQuadrum = false;
+        public bool RpcYear = false;
+        public bool RpcYearShort = false;
+        public bool RpcBiome = false;
+        public bool RpcColony = false;
+        public bool RpcColonistCount = false;
+        public bool RpcShowGameMessages = true;
 
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look(ref RpcColony, "RPC_Colony", true);
-            Scribe_Values.Look(ref RpcColonistCount, "RPC_ColonistCount");
-            Scribe_Values.Look(ref RpcBiome, "RPC_Biome");
-            Scribe_Values.Look(ref RpcYear, "RPC_Year");
-            Scribe_Values.Look(ref RpcYearShort, "RPC_YearShort", true);
-            Scribe_Values.Look(ref RpcQuadrum, "RPC_Quadrum", true);
-            Scribe_Values.Look(ref RpcDay, "RPC_Day", true);
-            Scribe_Values.Look(ref RpcHour, "RPC_Hour", true);
-            Scribe_Values.Look(ref RpcTime, "RPC_Time", true);
-            Scribe_Values.Look(ref RpcCustomTop, "RPC_CustomTop");
-            Scribe_Values.Look(ref RpcCustomBottom, "RPC_CustomBottom");
-            Scribe_Values.Look(ref ShowLastEvent, "ShowLastEvent"); // Sauvegarde de la nouvelle option
-            Scribe_Values.Look(ref RpcCustomTopText, "RPC_CustomTopText", "Example");
-            Scribe_Values.Look(ref RpcCustomBottomText, "RPC_CustomBottomText", "*Example");
+            Scribe_Values.Look(ref RpcCustomBottom, "RpcCustomBottom", false);
+            Scribe_Values.Look(ref RpcCustomBottomText, "RpcCustomBottomText", "");
+            Scribe_Values.Look(ref RpcCustomTop, "RpcCustomTop", false);
+            Scribe_Values.Look(ref RpcCustomTopText, "RpcCustomTopText", "");
+            Scribe_Values.Look(ref RpcDay, "RpcDay", false);
+            Scribe_Values.Look(ref RpcHour, "RpcHour", false);
+            Scribe_Values.Look(ref RpcQuadrum, "RpcQuadrum", false);
+            Scribe_Values.Look(ref RpcYear, "RpcYear", false);
+            Scribe_Values.Look(ref RpcYearShort, "RpcYearShort", false);
+            Scribe_Values.Look(ref RpcBiome, "RpcBiome", false);
+            Scribe_Values.Look(ref RpcColony, "RpcColony", false);
+            Scribe_Values.Look(ref RpcColonistCount, "RpcColonistCount", false);
+            Scribe_Values.Look(ref RpcShowGameMessages, "RpcShowGameMessages", true);
         }
     }
 
     public class RWRPCMod : Mod
     {
         public static RwrpcSettings Settings;
+
+        public static string ModDirectory;
+
         public RWRPCMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<RwrpcSettings>();
+            ModDirectory = content.RootDir;
         }
-        public override string SettingsCategory() => "RPC_CategoryLabel".Translate();
+
+        public override string SettingsCategory() => "RPC_ModSettingsCategory".Translate();
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
-            Listing_Standard listingStandard = new Listing_Standard();
-            listingStandard.Begin(inRect);
+            var listing = new Listing_Standard();
+            listing.Begin(inRect);
 
-            //Default settings
-            SetDefaultSettings(listingStandard);
+            bool settingsChanged = false;
 
-            //Custom field settings
-            SetCustomFields(listingStandard);
+            listing.Gap();
+            listing.Label("RPC_CustomTextLabel".Translate());
+            listing.GapLine();
 
-            // Nouvelle option
-            listingStandard.CheckboxLabeled("RPC_ShowLastEvent".Translate() + "  ", ref Settings.ShowLastEvent);
-
-            if (listingStandard.ButtonText("RPC_UpdateLabel".Translate()))
+            bool previousRpcCustomBottom = Settings.RpcCustomBottom;
+            listing.CheckboxLabeled("RPC_EnableCustomBottomText".Translate(), ref Settings.RpcCustomBottom, "RPC_CustomBottomTextDesc".Translate());
+            if (Settings.RpcCustomBottom != previousRpcCustomBottom)
             {
-                var world = Current.Game?.World;
-                if (world != null)
+                settingsChanged = true;
+            }
+
+            if (Settings.RpcCustomBottom)
+            {
+                string previousRpcCustomBottomText = Settings.RpcCustomBottomText;
+                listing.Label("RPC_CustomBottomTextLabel".Translate());
+                Settings.RpcCustomBottomText = listing.TextEntry(Settings.RpcCustomBottomText);
+                if (Settings.RpcCustomBottomText != previousRpcCustomBottomText)
                 {
-                    StateHandler.PushState(Current.Game.CurrentMap);
-                    
-                    // Update last event with the latest message from the letter stack
-                    var lastLetter = Find.LetterStack.LettersListForReading.LastOrDefault();
-                    if (lastLetter != null)
-                    {
-                        RimRPC.UpdateLastEvent($"{lastLetter.Label}");
-                    }
+                    settingsChanged = true;
                 }
             }
 
-            listingStandard.End();
-            Settings.Write();
-        }
-
-        private static void SetDefaultSettings(Listing_Standard listingStandard)
-        {
-            listingStandard.CheckboxLabeled("RPC_ColonyLabel".Translate() + " ", ref Settings.RpcColony);
-            listingStandard.CheckboxLabeled("RPC_ColonistCountLabel".Translate() + " ", ref Settings.RpcColonistCount);
-            listingStandard.CheckboxLabeled("RPC_BiomeLabel".Translate() + " ", ref Settings.RpcBiome);
-            listingStandard.CheckboxLabeled("RPC_YearLabel".Translate() + " ", ref Settings.RpcYear);
-            listingStandard.CheckboxLabeled("RPC_YearShortLabel".Translate() + " ", ref Settings.RpcYearShort);
-            listingStandard.CheckboxLabeled("RPC_QuadrumLabel".Translate() + " ", ref Settings.RpcQuadrum);
-            listingStandard.CheckboxLabeled("RPC_DayLabel".Translate() + "  ", ref Settings.RpcDay);
-            listingStandard.CheckboxLabeled("RPC_HourLabel".Translate() + "  ", ref Settings.RpcHour);
-            listingStandard.CheckboxLabeled("RPC_TimeLabel".Translate() + "  ", ref Settings.RpcTime);
-        }
-
-        private static void SetCustomFields(Listing_Standard listingStandard)
-        {
-            listingStandard.CheckboxLabeled("CustomTopCheckbox".Translate() + "  ", ref Settings.RpcCustomTop);
+            bool previousRpcCustomTop = Settings.RpcCustomTop;
+            listing.CheckboxLabeled("RPC_EnableCustomTopText".Translate(), ref Settings.RpcCustomTop, "RPC_CustomTopTextDesc".Translate());
+            if (Settings.RpcCustomTop != previousRpcCustomTop)
+            {
+                settingsChanged = true;
+            }
 
             if (Settings.RpcCustomTop)
-                Settings.RpcCustomTopText = listingStandard.TextEntryLabeled("CustomTopLabel".Translate() + " ", Settings.RpcCustomTopText);
+            {
+                string previousRpcCustomTopText = Settings.RpcCustomTopText;
+                listing.Label("RPC_CustomTopTextLabel".Translate());
+                Settings.RpcCustomTopText = listing.TextEntry(Settings.RpcCustomTopText);
+                if (Settings.RpcCustomTopText != previousRpcCustomTopText)
+                {
+                    settingsChanged = true;
+                }
+            }
 
-            listingStandard.CheckboxLabeled("CustomBottomCheckbox".Translate() + "  ", ref Settings.RpcCustomBottom);
+            listing.Gap();
+            listing.Label("RPC_TimeInfo".Translate());
+            listing.GapLine();
 
-            if (Settings.RpcCustomBottom)
-                Settings.RpcCustomBottomText = listingStandard.TextEntryLabeled("CustomBottomLabel".Translate() + " ", Settings.RpcCustomBottomText);
+            bool previousRpcDay = Settings.RpcDay;
+            listing.CheckboxLabeled("RPC_ShowDay".Translate(), ref Settings.RpcDay, "RPC_ShowDayDesc".Translate());
+            if (Settings.RpcDay != previousRpcDay)
+            {
+                settingsChanged = true;
+            }
+
+            bool previousRpcHour = Settings.RpcHour;
+            listing.CheckboxLabeled("RPC_ShowHour".Translate(), ref Settings.RpcHour, "RPC_ShowHourDesc".Translate());
+            if (Settings.RpcHour != previousRpcHour)
+            {
+                settingsChanged = true;
+            }
+
+            bool previousRpcQuadrum = Settings.RpcQuadrum;
+            listing.CheckboxLabeled("RPC_ShowQuadrum".Translate(), ref Settings.RpcQuadrum, "RPC_ShowQuadrumDesc".Translate());
+            if (Settings.RpcQuadrum != previousRpcQuadrum)
+            {
+                settingsChanged = true;
+            }
+
+            bool previousRpcYear = Settings.RpcYear;
+            listing.CheckboxLabeled("RPC_ShowYear".Translate(), ref Settings.RpcYear, "RPC_ShowYearDesc".Translate());
+            if (Settings.RpcYear != previousRpcYear)
+            {
+                settingsChanged = true;
+            }
+
+            bool previousRpcYearShort = Settings.RpcYearShort;
+            listing.CheckboxLabeled("RPC_ShowShortYear".Translate(), ref Settings.RpcYearShort, "RPC_ShowShortYearDesc".Translate());
+            if (Settings.RpcYearShort != previousRpcYearShort)
+            {
+                settingsChanged = true;
+            }
+
+            listing.Gap();
+            listing.Label("RPC_ColonyInfo".Translate());
+            listing.GapLine();
+
+            bool previousRpcBiome = Settings.RpcBiome;
+            listing.CheckboxLabeled("RPC_ShowBiome".Translate(), ref Settings.RpcBiome, "RPC_ShowBiomeDesc".Translate());
+            if (Settings.RpcBiome != previousRpcBiome)
+            {
+                settingsChanged = true;
+            }
+
+            bool previousRpcColony = Settings.RpcColony;
+            listing.CheckboxLabeled("RPC_ShowColonyName".Translate(), ref Settings.RpcColony, "RPC_ShowColonyNameDesc".Translate());
+            if (Settings.RpcColony != previousRpcColony)
+            {
+                settingsChanged = true;
+            }
+
+            bool previousRpcColonistCount = Settings.RpcColonistCount;
+            listing.CheckboxLabeled("RPC_ShowColonistCount".Translate(), ref Settings.RpcColonistCount, "RPC_ShowColonistCountDesc".Translate());
+            if (Settings.RpcColonistCount != previousRpcColonistCount)
+            {
+                settingsChanged = true;
+            }
+
+            listing.Gap();
+            listing.Label("RPC_EventSettings".Translate());
+            listing.GapLine();
+
+            bool previousRpcShowGameMessages = Settings.RpcShowGameMessages;
+            listing.CheckboxLabeled("RPC_ShowGameMessages".Translate(), ref Settings.RpcShowGameMessages, "RPC_ShowGameMessagesDesc".Translate());
+            if (Settings.RpcShowGameMessages != previousRpcShowGameMessages)
+            {
+                settingsChanged = true;
+            }
+
+            listing.End();
+
+            if (settingsChanged)
+            {
+                Settings.Write();
+                if (Current.ProgramState == ProgramState.Playing)
+                {
+                    RimRPC.UpdatePresence();
+                }
+            }
         }
     }
 }

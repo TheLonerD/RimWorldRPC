@@ -6,11 +6,29 @@ namespace RimRPC
     {
         public static string GetState(string state, string[] args)
         {
+
+            if (args == null)
+            {
+                Log.Error("GetState Error: 'args' is null.");
+                return state;
+            }
+            if (args.Length < 5)
+            {
+                Log.Error($"GetState Error: 'args' length is {args.Length}, expected at least 5.");
+                return state;
+            }
+
             var years = args[0];
             var days = args[1];
             var dayhour = args[2];
             var quadrum = args[3];
             var biome = args[4];
+
+            if (RWRPCMod.Settings == null)
+            {
+                Log.Error("GetState Error: 'RWRPCMod.Settings' is null.");
+                return state;
+            }
 
             if (RWRPCMod.Settings.RpcCustomBottom)
                 return RWRPCMod.Settings.RpcCustomBottomText;
