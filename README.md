@@ -27,7 +27,7 @@ RWRichPresence updates your Discord status with some information about your game
 1. Download the latest release [(link)](https://github.com/MasterPNJ/RimWorldRPC/releases)
 2. Extract the folder '3291415439' from the zip to your RimWorld Mod folder as per usual. DON'T RENAME THE ZIP AND FOLDER!
 3. Run Rimworld and enable the mod, save and restart the game.
-4. If it's first time you enable the mod, you need to restart the game one more time.
+~~4. If it's first time you enable the mod, you need to restart the game one more time.~~ ( No need to restart again now with 1.1.0 of the mod )
 
 Have fun !
 
