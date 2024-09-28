@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+    <!-- UI Labels -->
+    <RPC_ColonistCountLabel>Cantidad de colonos</RPC_ColonistCountLabel>
+    <RPC_BiomeLabel>Bioma actual</RPC_BiomeLabel>
+    <RPC_ColonyLabel>Nombre de la colonia</RPC_ColonyLabel>
+    <RPC_YearLabel>Año</RPC_YearLabel>
+    <RPC_YearShortLabel>Año corto</RPC_YearShortLabel>
+    <RPC_QuadrumLabel>Cuatrimestre</RPC_QuadrumLabel>
+    <RPC_DayLabel>Día</RPC_DayLabel>
+    <RPC_HourLabel>Hora</RPC_HourLabel>
+    <RPC_MainMenu>Menú principal</RPC_MainMenu>
+    <RPC_Playing>Jugando</RPC_Playing>
+
+    <!-- Mod Settings -->
+    <RPC_ModSettingsCategory>Mod RimRPC</RPC_ModSettingsCategory>
+    <RPC_CustomTextLabel>Texto personalizado :</RPC_CustomTextLabel>
+    <RPC_EnableCustomBottomText>Activar texto personalizado inferior</RPC_EnableCustomBottomText>
+    <RPC_CustomBottomTextDesc>Muestra un texto personalizado en la parte inferior de Rich Presence.</RPC_CustomBottomTextDesc>
+    <RPC_CustomBottomTextLabel>Texto personalizado inferior :</RPC_CustomBottomTextLabel>
+
+    <RPC_EnableCustomTopText>Activar texto personalizado superior</RPC_EnableCustomTopText>
+    <RPC_CustomTopTextDesc>Muestra un texto personalizado en la parte superior de Rich Presence.</RPC_CustomTopTextDesc>
+    <RPC_CustomTopTextLabel>Texto personalizado superior :</RPC_CustomTopTextLabel>
+
+    <RPC_TimeInfo>Información de tiempo :</RPC_TimeInfo>
+    <RPC_ShowDay>Día</RPC_ShowDay>
+    <RPC_ShowDayDesc>Muestra el día actual en el juego.</RPC_ShowDayDesc>
+    <RPC_ShowHour>Hora</RPC_ShowHour>
+    <RPC_ShowHourDesc>Muestra la hora actual en el juego.</RPC_ShowHourDesc>
+    <RPC_ShowQuadrum>Cuatrimestre</RPC_ShowQuadrum>
+    <RPC_ShowQuadrumDesc>Muestra el cuatrimestre actual en el juego.</RPC_ShowQuadrumDesc>
+    <RPC_ShowYear>Año</RPC_ShowYear>
+    <RPC_ShowYearDesc>Muestra el año actual en el juego.</RPC_ShowYearDesc>
+    <RPC_ShowShortYear>Año corto</RPC_ShowShortYear>
+    <RPC_ShowShortYearDesc>Muestra el año en formato corto.</RPC_ShowShortYearDesc>
+
+    <RPC_ColonyInfo>Información de la colonia :</RPC_ColonyInfo>
+    <RPC_ShowBiome>Bioma</RPC_ShowBiome>
+    <RPC_ShowBiomeDesc>Muestra el bioma actual de la colonia.</RPC_ShowBiomeDesc>
+    <RPC_ShowColonyName>Nombre de la colonia</RPC_ShowColonyName>
+    <RPC_ShowColonyNameDesc>Muestra el nombre de la colonia actual.</RPC_ShowColonyNameDesc>
+    <RPC_ShowColonistCount>Cantidad de colonos</RPC_ShowColonistCount>
+    <RPC_ShowColonistCountDesc>Muestra el número de colonos en la colonia.</RPC_ShowColonistCountDesc>
+
+    <RPC_EventSettings>Ajustes de eventos :</RPC_EventSettings>
+    <RPC_ShowGameMessages>Mostrar eventos</RPC_ShowGameMessages>
+    <RPC_ShowGameMessagesDesc>Muestra u oculta eventos de la colonia.</RPC_ShowGameMessagesDesc>
+
+    <!-- Error and Success Messages -->
+    <RPC_InitSuccess>Discord SDK inicializado correctamente.</RPC_InitSuccess>
+    <RPC_InitFailure>Error al inicializar Discord SDK: {0}</RPC_InitFailure>
+    <RPC_UpdateSuccess>Rich Presence actualizado correctamente.</RPC_UpdateSuccess>
+    <RPC_UpdateFailure>Error al actualizar Rich Presence: {0}</RPC_UpdateFailure>
+    <RPC_Shutdown>Discord SDK cerrado.</RPC_Shutdown>
+</LanguageData>

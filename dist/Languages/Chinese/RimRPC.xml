@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+    <!-- UI Labels -->
+    <RPC_ColonistCountLabel>殖民者数量</RPC_ColonistCountLabel>
+    <RPC_BiomeLabel>当前生物群落</RPC_BiomeLabel>
+    <RPC_ColonyLabel>殖民地名称</RPC_ColonyLabel>
+    <RPC_YearLabel>年</RPC_YearLabel>
+    <RPC_YearShortLabel>短年</RPC_YearShortLabel>
+    <RPC_QuadrumLabel>季节</RPC_QuadrumLabel>
+    <RPC_DayLabel>日</RPC_DayLabel>
+    <RPC_HourLabel>时</RPC_HourLabel>
+    <RPC_MainMenu>主菜单</RPC_MainMenu>
+    <RPC_Playing>游戏中</RPC_Playing>
+
+    <!-- Mod Settings -->
+    <RPC_ModSettingsCategory>RimRPC 模组</RPC_ModSettingsCategory>
+    <RPC_CustomTextLabel>自定义文本 :</RPC_CustomTextLabel>
+    <RPC_EnableCustomBottomText>启用底部自定义文本</RPC_EnableCustomBottomText>
+    <RPC_CustomBottomTextDesc>在 Rich Presence 底部显示自定义文本。</RPC_CustomBottomTextDesc>
+    <RPC_CustomBottomTextLabel>底部自定义文本 :</RPC_CustomBottomTextLabel>
+
+    <RPC_EnableCustomTopText>启用顶部自定义文本</RPC_EnableCustomTopText>
+    <RPC_CustomTopTextDesc>在 Rich Presence 顶部显示自定义文本。</RPC_CustomTopTextDesc>
+    <RPC_CustomTopTextLabel>顶部自定义文本 :</RPC_CustomTopTextLabel>
+
+    <RPC_TimeInfo>时间信息 :</RPC_TimeInfo>
+    <RPC_ShowDay>日</RPC_ShowDay>
+    <RPC_ShowDayDesc>显示游戏中的当前日期。</RPC_ShowDayDesc>
+    <RPC_ShowHour>时</RPC_ShowHour>
+    <RPC_ShowHourDesc>显示游戏中的当前时间。</RPC_ShowHourDesc>
+    <RPC_ShowQuadrum>季节</RPC_ShowQuadrum>
+    <RPC_ShowQuadrumDesc>显示游戏中的当前季节。</RPC_ShowQuadrumDesc>
+    <RPC_ShowYear>年</RPC_ShowYear>
+    <RPC_ShowYearDesc>显示游戏中的当前年份。</RPC_ShowYearDesc>
+    <RPC_ShowShortYear>短年</RPC_ShowShortYear>
+    <RPC_ShowShortYearDesc>以简短格式显示年份。</RPC_ShowShortYearDesc>
+
+    <RPC_ColonyInfo>殖民地信息 :</RPC_ColonyInfo>
+    <RPC_ShowBiome>生物群落</RPC_ShowBiome>
+    <RPC_ShowBiomeDesc>显示当前殖民地的生物群落。</RPC_ShowBiomeDesc>
+    <RPC_ShowColonyName>殖民地名称</RPC_ShowColonyName>
+    <RPC_ShowColonyNameDesc>显示当前殖民地的名称。</RPC_ShowColonyNameDesc>
+    <RPC_ShowColonistCount>殖民者数量</RPC_ShowColonistCount>
+    <RPC_ShowColonistCountDesc>显示殖民地中的殖民者数量。</RPC_ShowColonistCountDesc>
+
+    <RPC_EventSettings>事件设置 :</RPC_EventSettings>
+    <RPC_ShowGameMessages>显示事件</RPC_ShowGameMessages>
+    <RPC_ShowGameMessagesDesc>显示或隐藏殖民地事件。</RPC_ShowGameMessagesDesc>
+
+    <!-- Error and Success Messages -->
+    <RPC_InitSuccess>Discord SDK 初始化成功。</RPC_InitSuccess>
+    <RPC_InitFailure>初始化 Discord SDK 失败: {0}</RPC_InitFailure>
+    <RPC_UpdateSuccess>Rich Presence 更新成功。</RPC_UpdateSuccess>
+    <RPC_UpdateFailure>更新 Rich Presence 失败: {0}</RPC_UpdateFailure>
+    <RPC_Shutdown>Discord SDK 已关闭。</RPC_Shutdown>
+</LanguageData>

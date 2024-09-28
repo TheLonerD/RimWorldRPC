@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+    <!-- UI Labels -->
+    <RPC_ColonistCountLabel>コロニスト数</RPC_ColonistCountLabel>
+    <RPC_BiomeLabel>現在のバイオーム</RPC_BiomeLabel>
+    <RPC_ColonyLabel>コロニー名</RPC_ColonyLabel>
+    <RPC_YearLabel>年</RPC_YearLabel>
+    <RPC_YearShortLabel>短縮年</RPC_YearShortLabel>
+    <RPC_QuadrumLabel>四半期</RPC_QuadrumLabel>
+    <RPC_DayLabel>日</RPC_DayLabel>
+    <RPC_HourLabel>時</RPC_HourLabel>
+    <RPC_MainMenu>メインメニュー</RPC_MainMenu>
+    <RPC_Playing>プレイ中</RPC_Playing>
+
+    <!-- Mod Settings -->
+    <RPC_ModSettingsCategory>RimRPC Mod</RPC_ModSettingsCategory>
+    <RPC_CustomTextLabel>カスタムテキスト :</RPC_CustomTextLabel>
+    <RPC_EnableCustomBottomText>下部カスタムテキストを有効にする</RPC_EnableCustomBottomText>
+    <RPC_CustomBottomTextDesc>Rich Presenceの下部にカスタムテキストを表示します。</RPC_CustomBottomTextDesc>
+    <RPC_CustomBottomTextLabel>下部カスタムテキスト :</RPC_CustomBottomTextLabel>
+
+    <RPC_EnableCustomTopText>上部カスタムテキストを有効にする</RPC_EnableCustomTopText>
+    <RPC_CustomTopTextDesc>Rich Presenceの上部にカスタムテキストを表示します。</RPC_CustomTopTextDesc>
+    <RPC_CustomTopTextLabel>上部カスタムテキスト :</RPC_CustomTopTextLabel>
+
+    <RPC_TimeInfo>時間情報 :</RPC_TimeInfo>
+    <RPC_ShowDay>日</RPC_ShowDay>
+    <RPC_ShowDayDesc>ゲーム内の現在の日を表示します。</RPC_ShowDayDesc>
+    <RPC_ShowHour>時</RPC_ShowHour>
+    <RPC_ShowHourDesc>ゲーム内の現在の時刻を表示します。</RPC_ShowHourDesc>
+    <RPC_ShowQuadrum>四半期</RPC_ShowQuadrum>
+    <RPC_ShowQuadrumDesc>ゲーム内の現在の四半期を表示します。</RPC_ShowQuadrumDesc>
+    <RPC_ShowYear>年</RPC_ShowYear>
+    <RPC_ShowYearDesc>ゲーム内の現在の年を表示します。</RPC_ShowYearDesc>
+    <RPC_ShowShortYear>短縮年</RPC_ShowShortYear>
+    <RPC_ShowShortYearDesc>年を短縮形式で表示します。</RPC_ShowShortYearDesc>
+
+    <RPC_ColonyInfo>コロニー情報 :</RPC_ColonyInfo>
+    <RPC_ShowBiome>バイオーム</RPC_ShowBiome>
+    <RPC_ShowBiomeDesc>コロニーの現在のバイオームを表示します。</RPC_ShowBiomeDesc>
+    <RPC_ShowColonyName>コロニー名</RPC_ShowColonyName>
+    <RPC_ShowColonyNameDesc>現在のコロニーの名前を表示します。</RPC_ShowColonyNameDesc>
+    <RPC_ShowColonistCount>コロニスト数</RPC_ShowColonistCount>
+    <RPC_ShowColonistCountDesc>コロニー内のコロニストの数を表示します。</RPC_ShowColonistCountDesc>
+
+    <RPC_EventSettings>イベント設定 :</RPC_EventSettings>
+    <RPC_ShowGameMessages>イベントを表示</RPC_ShowGameMessages>
+    <RPC_ShowGameMessagesDesc>コロニーのイベントを表示または非表示にします。</RPC_ShowGameMessagesDesc>
+
+    <!-- Error and Success Messages -->
+    <RPC_InitSuccess>Discord SDKが正常に初期化されました。</RPC_InitSuccess>
+    <RPC_InitFailure>Discord SDKの初期化に失敗しました: {0}</RPC_InitFailure>
+    <RPC_UpdateSuccess>Rich Presenceが正常に更新されました。</RPC_UpdateSuccess>
+    <RPC_UpdateFailure>Rich Presenceの更新に失敗しました: {0}</RPC_UpdateFailure>
+    <RPC_Shutdown>Discord SDKがシャットダウンされました。</RPC_Shutdown>
+</LanguageData>
