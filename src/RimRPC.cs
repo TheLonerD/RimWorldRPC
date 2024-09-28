@@ -83,11 +83,11 @@ namespace RimRPC
             {
                 if (result == Result.Ok)
                 {
-                    Log.Message("RimRPC : Rich Presence mise à jour avec succès.");
+                    //Log.Message("RimRPC : Rich Presence mise à jour avec succès."); // Only for debugging --> spam in the log
                 }
                 else
                 {
-                    Log.Error($"RimRPC : Échec de la mise à jour de la Rich Presence : {result}");
+                    //Log.Error($"RimRPC : Échec de la mise à jour de la Rich Presence : {result}"); // Only for debugging --> spam in the log
                 }
             });
         }
@@ -105,13 +105,13 @@ namespace RimRPC
                 if (settings.RpcColonistCount)
                 {
                     int colonistCount = GetColonistCount();
-                    state += "RPC_ColonistCountLabel".Translate() + ": " + colonistCount + "\n";  // Traduction
+                    state += "RPC_ColonistCountLabel".Translate() + ": " + colonistCount + "\n";
                 }
 
                 if (settings.RpcBiome)
                 {
                     string biome = GetCurrentBiome();
-                    state += "RPC_BiomeLabel".Translate() + ": " + biome + "\n";  // Traduction
+                    state += "RPC_BiomeLabel".Translate() + ": " + biome + "\n";
                 }
 
                 return state;
@@ -137,7 +137,7 @@ namespace RimRPC
                 if (settings.RpcColony)
                 {
                     string colonyName = GetColonyName();
-                    details += "RPC_ColonyLabel".Translate() + ": " + colonyName + "\n";  // Traduction
+                    details += "RPC_ColonyLabel".Translate() + ": " + colonyName + "\n";
                 }
 
                 return details;
