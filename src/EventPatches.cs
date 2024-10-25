@@ -16,17 +16,21 @@ namespace RimRPC
             harmony.PatchAll();
         }
 
-        [HarmonyPatch(typeof(Messages))]
+        [HarmonyPatch(typeof(Messages), nameof(Messages.Message), new Type[] { typeof(Message), typeof(bool) })]
         public static class Messages_Message_Patch
         {
-            static MethodBase TargetMethod()
+            public static void Postfix(Message msg, bool historical = true)
             {
-                return AccessTools.Method(typeof(Messages), "Message", new Type[] { typeof(TaggedString), typeof(MessageTypeDef), typeof(bool) });
+                RimRPC.UpdateLastEvent($"Event: {msg.text}");
             }
+        }
 
-            public static void Postfix(TaggedString text, MessageTypeDef def)
+        [HarmonyPatch(typeof(Root), nameof(Root.Shutdown))]
+        public static class Root_Shutdown_Patch
+        {
+            public static void Postfix()
             {
-                RimRPC.UpdateLastEvent($"Event: {text}");
+                RimRPC.Shutdown();
             }
         }
     }

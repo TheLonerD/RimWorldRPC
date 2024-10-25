@@ -25,7 +25,7 @@ namespace RimRPC
                 Log.Error("RimRPC: Failed to apply main menu patch. Exception: " + ex);
             }
 
-            RimRPC.BootMeUp();
+            RimRPC.BootMeUp(content);
         }
     }
 
@@ -37,9 +37,10 @@ namespace RimRPC
         internal static long Started = (DateTime.UtcNow.Ticks - new DateTime(1970, 1, 1).Ticks) / TimeSpan.TicksPerSecond;
         internal static string LastEvent; // Nouvelle variable
 
-        public static void BootMeUp()
+        public static void BootMeUp(ModContentPack content)
         {
             Log.Message("RimRPC: Initializing Discord RPC...");
+            DiscordRPC.InitLib(content);
             DiscordRPC.EventHandlers eventHandlers = default;
             eventHandlers.ReadyCallback = (DiscordRPC.ReadyCallback)Delegate.Combine(eventHandlers.ReadyCallback, new DiscordRPC.ReadyCallback(ReadyCallback));
             eventHandlers.DisconnectedCallback = (DiscordRPC.DisconnectedCallback)Delegate.Combine(eventHandlers.DisconnectedCallback, new DiscordRPC.DisconnectedCallback(DisconnectedCallback));
@@ -107,6 +108,12 @@ namespace RimRPC
         public static void GoToMainMenu_Postfix()
         {
             StateHandler.MenuState();
+        }
+
+        public static void Shutdown()
+        {
+            DiscordRPC.Shutdown();
+            DiscordRPC.Cleanup();
         }
     }
 }
